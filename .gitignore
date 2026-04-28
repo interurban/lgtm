@@ -1,0 +1,47 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Node / Remotion
+node_modules/
+
+# Generated episode assets (TTS, stock clips, final MP4s)
+episodes/*/tts/
+episodes/*/clips/
+episodes/*/output/
+episodes/**/frames/
+
+# Copied into Remotion public/ during remotion_renderer runs
+render/remotion/public/clips/
+render/remotion/public/mockups/
+
+# Erroneous / stray Remotion intermediate output (not part of repo layout)
+render/remotion/episodes/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+.idea/
+.vscode/
+*.code-workspace
+
+# MoviePy / ffmpeg temps
+**/temp_audio.m4a
+
+# Logs / scratch
+*.log
+scratch/

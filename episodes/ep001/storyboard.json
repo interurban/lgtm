@@ -1,0 +1,238 @@
+{
+  "episode_id": "ep001",
+  "total_duration": 31.3,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0.0,
+      "duration": 3.5,
+      "enter": "scale",
+      "vo": {
+        "text": "An AI was hired to fix accounts payable.",
+        "audio_file": "tts/s01.wav",
+        "duration_hint": 3.6
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Accounts payable.",
+        "subtitle": "The AI said three days."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.45, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 3.5,
+      "duration": 2.0,
+      "vo": {
+        "text": "Month eighteen.",
+        "audio_file": "tts/s02.wav",
+        "duration_hint": 1.9
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "18",
+        "label": "Month",
+        "color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s03",
+      "type": "card",
+      "start": 5.5,
+      "duration": 2.2,
+      "enter": "fade",
+      "vo": {
+        "text": "Still in pilot.",
+        "audio_file": "tts/s03.wav",
+        "duration_hint": 1.9
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Still in pilot."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.6}
+      ]
+    },
+    {
+      "scene_id": "s04",
+      "type": "broll",
+      "start": 7.7,
+      "duration": 3.8,
+      "enter": "fade",
+      "vo": {
+        "text": "The steering committee has met eleven times.",
+        "audio_file": "tts/s04.wav",
+        "duration_hint": 3.5
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "boring meeting man asleep",
+        "clip_source": "giphy",
+        "clip_id": "RGkHXDApwyQRm9AwLm",
+        "clip_file": "clips/s04.mp4",
+        "clip_url": "https://giphy.com/gifs/RGkHXDApwyQRm9AwLm",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "11 meetings.",
+          "subtitle": "Steering committee."
+        },
+        "lower_third": {
+          "headline": "11 meetings.",
+          "subtitle": "Steering committee."
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s05",
+      "type": "kinetic",
+      "start": 11.5,
+      "duration": 2.3,
+      "vo": {
+        "text": "Zero decisions.",
+        "audio_file": "tts/s05.wav",
+        "duration_hint": 2.0
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "0",
+        "label": "decisions",
+        "color": "red"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.45, "name": "ding", "vol": 0.5}
+      ]
+    },
+    {
+      "scene_id": "s06",
+      "type": "mockup",
+      "start": 13.8,
+      "duration": 5.0,
+      "enter": "fade",
+      "vo": {
+        "text": "A subcommittee was formed to govern the governance of the pilot.",
+        "audio_file": "tts/s06.wav",
+        "duration_hint": 4.7
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "jira",
+        "mockup_data": {
+          "key": "AP-1138",
+          "title": "Form subcommittee to govern the governance",
+          "status": "In Progress",
+          "assignee": "Steering Committee",
+          "reporter": "CFO",
+          "priority": "Low",
+          "sprint": "Q4 / 2024",
+          "created": "18 months ago",
+          "updated": "11 minutes ago",
+          "points": "∞",
+          "comments_count": 247,
+          "description_lines": [
+            "Per Q3 OKR alignment, the steering",
+            "committee has directed the formation",
+            "of a subcommittee to establish",
+            "governance protocols for the AI",
+            "pilot's governance framework.",
+            "Pending charter review."
+          ]
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "typewriter", "vol": 0.5},
+        {"at": 4.4, "name": "click", "vol": 0.6}
+      ]
+    },
+    {
+      "scene_id": "s07",
+      "type": "mockup",
+      "start": 18.8,
+      "duration": 6.2,
+      "enter": "fade",
+      "vo": {
+        "text": "Last week, the committee booked two hours to discuss whether they were ready to decide.",
+        "audio_file": "tts/s07.wav",
+        "duration_hint": 5.8
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "calendar",
+        "mockup_data": {
+          "date": "Thursday, October 17",
+          "time": "2:00 PM – 4:00 PM",
+          "title": "Discuss readiness to decide",
+          "location": "Boardroom A",
+          "attendees": 11,
+          "organizer": "Steering Committee",
+          "attendee_names": [
+            "Steering Committee",
+            "Subcommittee Chair",
+            "Compliance Lead",
+            "AI Pilot PM",
+            "Governance Counsel",
+            "+ 6 others"
+          ]
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "pop"},
+        {"at": 0.4, "name": "click", "vol": 0.5},
+        {"at": 5.6, "name": "ding", "vol": 0.4}
+      ]
+    },
+    {
+      "scene_id": "s08",
+      "type": "card",
+      "start": 25.0,
+      "duration": 2.8,
+      "enter": "snap",
+      "vo": {
+        "text": "They decided to follow up.",
+        "audio_file": "tts/s08.wav",
+        "duration_hint": 2.3
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "They decided to follow up."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh"},
+        {"at": 1.5, "name": "ding", "vol": 0.5}
+      ]
+    },
+    {
+      "scene_id": "s09",
+      "type": "card",
+      "start": 27.8,
+      "duration": 3.5,
+      "enter": "fade",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM.",
+        "subtitle": "Looks Good To Merge.",
+        "headline_size": 180
+      },
+      "notes": "Silent button. Hard hold.",
+      "sfx": [
+        {"at": 0.4, "name": "thud", "vol": 0.9}
+      ]
+    }
+  ]
+}

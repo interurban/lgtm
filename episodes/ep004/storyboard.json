@@ -1,0 +1,301 @@
+{
+  "episode_id": "ep004",
+  "total_duration": 19.8,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0.0,
+      "duration": 1.8,
+      "enter": "scale",
+      "vo": {
+        "text": "Q3 sprint review.",
+        "audio_file": "tts/s01.wav",
+        "duration_hint": 1.4
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Q3.",
+        "subtitle": "Sprint Review."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.35, "name": "whoosh", "vol": 0.6}
+      ]
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 1.8,
+      "duration": 1.5,
+      "vo": {
+        "text": "Forty-seven tickets opened.",
+        "audio_file": "tts/s02.wav",
+        "duration_hint": 1.4
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "47",
+        "label": "tickets opened",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s03",
+      "type": "kinetic",
+      "start": 3.3,
+      "duration": 1.5,
+      "vo": {
+        "text": "Forty-seven in progress.",
+        "audio_file": "tts/s03.wav",
+        "duration_hint": 1.4
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "47",
+        "label": "in progress",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s04",
+      "type": "kinetic",
+      "start": 4.8,
+      "duration": 1.5,
+      "vo": {
+        "text": "Zero shipped.",
+        "audio_file": "tts/s04.wav",
+        "duration_hint": 1.2
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "0",
+        "label": "shipped",
+        "color": "red",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.4, "name": "ding", "vol": 0.4}
+      ]
+    },
+    {
+      "scene_id": "s05",
+      "type": "broll",
+      "start": 6.3,
+      "duration": 2.0,
+      "enter": "snap",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "screaming internally",
+        "clip_source": "giphy",
+        "clip_id": "FBXHQUObh0ryE",
+        "clip_file": "clips/s05.mp4",
+        "clip_url": "https://giphy.com/gifs/FBXHQUObh0ryE",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Stakeholder update:",
+          "subtitle": "On track."
+        },
+        "lower_third": {
+          "headline": "Stakeholder update:",
+          "subtitle": "On track."
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.8}
+      ]
+    },
+    {
+      "scene_id": "s06",
+      "type": "mockup",
+      "start": 8.3,
+      "duration": 2.5,
+      "enter": "fade",
+      "vo": {
+        "text": "Eight hundred and forty-seven Slack messages.",
+        "audio_file": "tts/s06.wav",
+        "duration_hint": 2.4
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "slack",
+        "mockup_data": {
+          "channel": "sprint-q3",
+          "messages": [
+            {
+              "user": "j.santos",
+              "time": "Mon 9:14 AM",
+              "text": "can we get alignment on the roadmap before sprint planning?"
+            },
+            {
+              "user": "roadmap-bot",
+              "time": "Mon 9:14 AM",
+              "text": "Roadmap sync is scheduled for Q4 kickoff."
+            },
+            {
+              "user": "j.santos",
+              "time": "Thu 2:47 PM",
+              "text": "it's Q4"
+            },
+            {
+              "user": "roadmap-bot",
+              "time": "Thu 2:47 PM",
+              "text": "Roadmap sync is scheduled for Q4 kickoff."
+            }
+          ]
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "pop"},
+        {"at": 0.3, "name": "typewriter", "vol": 0.4}
+      ]
+    },
+    {
+      "scene_id": "s07",
+      "type": "mockup",
+      "start": 10.8,
+      "duration": 2.5,
+      "enter": "fade",
+      "vo": {
+        "text": "The epic has been in progress for six months.",
+        "audio_file": "tts/s07.wav",
+        "duration_hint": 2.3
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "jira",
+        "mockup_data": {
+          "key": "PROJ-1",
+          "title": "Ship Something",
+          "status": "In Progress",
+          "assignee": "The Team",
+          "reporter": "CEO",
+          "priority": "Critical",
+          "sprint": "Q1 / 2024",
+          "created": "6 months ago",
+          "updated": "2 minutes ago",
+          "points": "∞",
+          "comments_count": 423,
+          "description_lines": [
+            "Core deliverable for H1. Must ship by EOQ.",
+            "Blocker: requires alignment on scope.",
+            "Scope alignment pending roadmap.",
+            "Roadmap pending Q4 kickoff.",
+            "Q4 kickoff pending this ticket.",
+            "Status: In Progress."
+          ]
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "typewriter", "vol": 0.4},
+        {"at": 2.0, "name": "click", "vol": 0.5}
+      ]
+    },
+    {
+      "scene_id": "s08",
+      "type": "kinetic",
+      "start": 13.3,
+      "duration": 1.5,
+      "vo": {
+        "text": "Negative twelve.",
+        "audio_file": "tts/s08.wav",
+        "duration_hint": 1.2
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "-12",
+        "label": "story points",
+        "color": "red",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s09",
+      "type": "card",
+      "start": 14.8,
+      "duration": 1.5,
+      "enter": "snap",
+      "vo": {
+        "text": "The velocity is adjusting.",
+        "audio_file": "tts/s09.wav",
+        "duration_hint": 1.4
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Velocity:",
+        "subtitle": "Adjusting."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s10",
+      "type": "broll",
+      "start": 16.3,
+      "duration": 1.5,
+      "enter": "snap",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "tumbleweed silence",
+        "clip_source": "giphy",
+        "clip_id": "JB7gDgg1BKjRu",
+        "clip_file": "clips/s10.mp4",
+        "clip_url": "https://giphy.com/gifs/JB7gDgg1BKjRu",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Sprint capacity:",
+          "subtitle": "Fully allocated."
+        },
+        "lower_third": {
+          "headline": "Sprint capacity:",
+          "subtitle": "Fully allocated."
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.5}
+      ]
+    },
+    {
+      "scene_id": "s11",
+      "type": "card",
+      "start": 17.8,
+      "duration": 2.0,
+      "enter": "fade",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM.",
+        "subtitle": "Looks Good To Merge.",
+        "headline_size": 180
+      },
+      "notes": "Silent button.",
+      "sfx": [
+        {"at": 0.4, "name": "thud", "vol": 0.9}
+      ]
+    }
+  ]
+}

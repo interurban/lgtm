@@ -1,0 +1,325 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lgtm/storyboard",
+  "title": "LGTM Storyboard",
+  "description": "Timecoded scene list. Written by the storyboard agent. Read by renderer, tts-builder, and clip-sourcer.",
+  "type": "object",
+  "required": ["episode_id", "total_duration", "scenes"],
+  "additionalProperties": false,
+  "properties": {
+
+    "episode_id": {
+      "type": "string",
+      "pattern": "^ep[0-9]{3,}$",
+      "description": "Must match episode.json episode_id."
+    },
+
+    "total_duration": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Sum of all scene durations in seconds. Renderer validates against actual scene list."
+    },
+
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered scene list. Scenes are rendered in array order. start + duration of scene[n] must equal start of scene[n+1].",
+      "items": { "$ref": "#/$defs/scene" }
+    }
+
+  },
+
+  "$defs": {
+
+    "scene": {
+      "type": "object",
+      "required": ["scene_id", "type", "start", "duration"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_id": {
+          "type": "string",
+          "pattern": "^s[0-9]{2,}$",
+          "description": "Stable scene identifier within this episode, e.g. s01.",
+          "examples": ["s01"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["card", "broll", "screen-recording", "talking-head"],
+          "description": "Scene type. Determines which visual properties are required."
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Scene start time in seconds from episode start."
+        },
+        "duration": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Scene duration in seconds."
+        },
+        "vo": { "$ref": "#/$defs/vo_block" },
+        "visual": {
+          "description": "Type-specific visual properties. See $defs for each type.",
+          "oneOf": [
+            { "$ref": "#/$defs/visual_card" },
+            { "$ref": "#/$defs/visual_broll" },
+            { "$ref": "#/$defs/visual_screen_recording" },
+            { "$ref": "#/$defs/visual_talking_head" }
+          ]
+        },
+        "sfx": {
+          "type": "array",
+          "description": "Optional SFX cues for this scene.",
+          "items": { "$ref": "#/$defs/sfx_cue" }
+        },
+        "notes": {
+          "type": "string",
+          "description": "Director's notes for this scene — not rendered, used for human review."
+        }
+      },
+      "if": { "properties": { "type": { "const": "card" } } },
+      "then": {
+        "required": ["visual"],
+        "properties": {
+          "visual": { "$ref": "#/$defs/visual_card" }
+        }
+      },
+      "else": {
+        "if": { "properties": { "type": { "const": "broll" } } },
+        "then": {
+          "required": ["visual"],
+          "properties": {
+            "visual": { "$ref": "#/$defs/visual_broll" }
+          }
+        },
+        "else": {
+          "if": { "properties": { "type": { "const": "screen-recording" } } },
+          "then": {
+            "required": ["visual"],
+            "properties": {
+              "visual": { "$ref": "#/$defs/visual_screen_recording" }
+            }
+          },
+          "else": {
+            "if": { "properties": { "type": { "const": "talking-head" } } },
+            "then": {
+              "required": ["visual"],
+              "properties": {
+                "visual": { "$ref": "#/$defs/visual_talking_head" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "vo_block": {
+      "type": "object",
+      "description": "Voice-over for this scene. text is the script; audio_file is populated by tts-builder.",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Exact VO text to synthesize for this scene. May be empty string for silent scenes."
+        },
+        "audio_file": {
+          "type": "string",
+          "description": "Relative path to WAV file within tts/ dir. Populated by tts-builder. E.g. tts/s01.wav."
+        },
+        "duration_hint": {
+          "type": "number",
+          "description": "Expected TTS duration in seconds, estimated by script agent. Renderer uses actual audio duration."
+        }
+      }
+    },
+
+    "lower_third": {
+      "type": "object",
+      "description": "Lower-third text overlay for broll and video scenes.",
+      "additionalProperties": false,
+      "properties": {
+        "headline": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Primary lower-third line."
+        },
+        "subtitle": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Secondary lower-third line."
+        }
+      }
+    },
+
+    "visual_card": {
+      "type": "object",
+      "description": "Dark card with LGTM label + headline + subtitle. Brand default scene type.",
+      "required": ["scene_type", "headline"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_type": { "type": "string", "const": "card" },
+        "headline": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Primary headline text. Rendered in Consolas, accent color."
+        },
+        "subtitle": {
+          "type": "string",
+          "maxLength": 160,
+          "description": "Secondary line below headline. One subtitle max — copy discipline."
+        }
+      }
+    },
+
+    "visual_broll": {
+      "type": "object",
+      "description": "Stock video clip with dim overlay and Ken Burns zoom. Renderer falls back to card if clip_file is missing.",
+      "required": ["scene_type"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_type": { "type": "string", "const": "broll" },
+        "clip_query": {
+          "type": "string",
+          "description": "Search terms used by clip-sourcer to find this clip, e.g. 'server room cables'."
+        },
+        "clip_source": {
+          "type": "string",
+          "enum": ["pexels", "pixabay", "local"],
+          "description": "Where the clip was sourced."
+        },
+        "clip_id": {
+          "type": "string",
+          "description": "Source platform's video ID. Populated by clip-sourcer."
+        },
+        "clip_file": {
+          "type": "string",
+          "description": "Relative path to downloaded clip within clips/ dir, e.g. clips/s02.mp4. Populated by clip-sourcer. If absent, renderer falls back to card."
+        },
+        "clip_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Source URL of the clip for attribution."
+        },
+        "fallback": {
+          "description": "Card to render if clip_file is missing. Renderer uses this instead of hard-failing.",
+          "$ref": "#/$defs/visual_card"
+        },
+        "lower_third": { "$ref": "#/$defs/lower_third" }
+      }
+    },
+
+    "visual_screen_recording": {
+      "type": "object",
+      "description": "Local screen recording. Must be present — no network fallback.",
+      "required": ["scene_type", "clip_file"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_type": { "type": "string", "const": "screen-recording" },
+        "clip_file": {
+          "type": "string",
+          "description": "Relative path to screen recording video file."
+        },
+        "lower_third": { "$ref": "#/$defs/lower_third" }
+      }
+    },
+
+    "visual_talking_head": {
+      "type": "object",
+      "description": "Local talking-head video clip.",
+      "required": ["scene_type", "clip_file"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_type": { "type": "string", "const": "talking-head" },
+        "clip_file": {
+          "type": "string",
+          "description": "Relative path to talking-head video file."
+        },
+        "lower_third": { "$ref": "#/$defs/lower_third" }
+      }
+    },
+
+    "sfx_cue": {
+      "type": "object",
+      "description": "A sound effect tied to a moment within the scene.",
+      "required": ["offset", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "offset": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Seconds from the start of this scene to trigger the SFX."
+        },
+        "description": {
+          "type": "string",
+          "description": "What the SFX is, for the audio-direction agent and human review."
+        },
+        "file": {
+          "type": "string",
+          "description": "Relative path to SFX audio file, if sourced."
+        }
+      }
+    }
+
+  },
+
+  "examples": [
+    {
+      "episode_id": "ep001",
+      "total_duration": 62.0,
+      "scenes": [
+        {
+          "scene_id": "s01",
+          "type": "card",
+          "start": 0.0,
+          "duration": 3.5,
+          "vo": {
+            "text": "In 2024, the average enterprise developer attended 23 hours of meetings per week."
+          },
+          "visual": {
+            "scene_type": "card",
+            "headline": "23 hours.",
+            "subtitle": "Per week. In meetings."
+          }
+        },
+        {
+          "scene_id": "s02",
+          "type": "broll",
+          "start": 3.5,
+          "duration": 6.0,
+          "vo": {
+            "text": "That leaves approximately one hour for the work the meetings are about."
+          },
+          "visual": {
+            "scene_type": "broll",
+            "clip_query": "empty office conference room",
+            "clip_source": "pexels",
+            "fallback": {
+              "scene_type": "card",
+              "headline": "1 hour left.",
+              "subtitle": "For the actual work."
+            },
+            "lower_third": {
+              "headline": "Enterprise productivity.",
+              "subtitle": "Measured in calendar blocks."
+            }
+          }
+        },
+        {
+          "scene_id": "s03",
+          "type": "card",
+          "start": 9.5,
+          "duration": 3.0,
+          "vo": {
+            "text": "LGTM. Looks Good To Merge."
+          },
+          "visual": {
+            "scene_type": "card",
+            "headline": "LGTM.",
+            "subtitle": "Looks Good To Merge."
+          }
+        }
+      ]
+    }
+  ]
+}

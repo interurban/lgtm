@@ -1,0 +1,344 @@
+{
+  "episode_id": "ep005",
+  "total_duration": 19.0,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "style": "amiga",
+      "start": 0.0,
+      "duration": 1.6,
+      "enter": "scale",
+      "vo": {
+        "text": "ChatGPT five-five. Four things.",
+        "audio_file": "tts/s01.wav",
+        "duration_hint": 1.4
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "ChatGPT 5.5",
+        "subtitle": "FOUR THINGS",
+        "amiga_title": "LGTM:DH0/ep005.run",
+        "amiga_icons": ["disk", "folder"]
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.3, "name": "whoosh", "vol": 0.55}
+      ]
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 1.6,
+      "duration": 1.0,
+      "vo": {
+        "text": "One. Smarter.",
+        "audio_file": "tts/s02.wav",
+        "duration_hint": 1.0
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "1",
+        "label": "smarter",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "captions": [
+        {"text": "(allegedly)", "at": 0.6, "duration": 0.4, "position": "bottom-right", "color": "cyan", "size": "sm"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s03",
+      "type": "card",
+      "start": 2.6,
+      "duration": 1.4,
+      "enter": "fade",
+      "vo": {
+        "text": "Benchmark score up three points.",
+        "audio_file": "tts/s03.wav",
+        "duration_hint": 1.4
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "BENCHMARK +3",
+        "subtitle": "(new benchmark)"
+      },
+      "captions": [
+        {"text": "they made it", "at": 0.7, "duration": 0.7, "position": "bottom-right", "color": "cyan", "size": "sm"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "pop", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s04",
+      "type": "kinetic",
+      "start": 4.0,
+      "duration": 1.0,
+      "vo": {
+        "text": "Two. It reasons.",
+        "audio_file": "tts/s04.wav",
+        "duration_hint": 1.0
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "2",
+        "label": "reasons",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "captions": [
+        {"text": "natively", "at": 0.5, "duration": 0.5, "position": "bottom-right", "color": "cyan", "size": "sm"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s05",
+      "type": "burst",
+      "start": 5.0,
+      "duration": 1.6,
+      "vo": {
+        "text": "Four reasoning modes now.",
+        "audio_file": "tts/s05b.wav",
+        "duration_hint": 1.5
+      },
+      "visual": {
+        "scene_type": "burst",
+        "items": [
+          {"text": "MODE 1.", "delay": 0.05, "color": "accent", "size": "lg", "from": "left",   "rotate": -2, "position": {"x": 28, "y": 32}},
+          {"text": "MODE 2.", "delay": 0.20, "color": "white",  "size": "lg", "from": "right",  "rotate":  3, "position": {"x": 72, "y": 38}},
+          {"text": "MODE 3.", "delay": 0.35, "color": "cyan",   "size": "lg", "from": "top",    "rotate": -1, "position": {"x": 30, "y": 64}},
+          {"text": "MODE 4.", "delay": 0.50, "color": "accent", "size": "lg", "from": "bottom", "rotate":  2, "position": {"x": 70, "y": 70}},
+          {"text": "ALL THE SAME.", "delay": 0.85, "color": "red", "size": "xl", "from": "scale", "position": {"x": 50, "y": 50}}
+        ]
+      },
+      "sfx": [
+        {"at": 0.05, "name": "click"},
+        {"at": 0.20, "name": "click"},
+        {"at": 0.35, "name": "click"},
+        {"at": 0.50, "name": "click"},
+        {"at": 0.85, "name": "thud", "vol": 0.85}
+      ]
+    },
+    {
+      "scene_id": "s06",
+      "type": "mockup",
+      "start": 6.6,
+      "duration": 1.8,
+      "enter": "fade",
+      "vo": {
+        "text": "All four return the same.",
+        "audio_file": "tts/s06c.wav",
+        "duration_hint": 1.6
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "code",
+        "mockup_data": {
+          "filename": "reasoning.ts",
+          "language": "ts",
+          "lines": [
+            "// four modes. one answer.",
+            "const result = await reason({mode: 1});",
+            "// also: 2, 3, 4",
+            "return \"the same\";"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "return \"the same\"",
+          "subtitle": "(all four modes)"
+        }
+      },
+      "captions": [
+        {"text": "// no comment", "at": 1.0, "duration": 0.7, "position": "bottom-right", "color": "cyan", "size": "sm"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "typewriter", "vol": 0.45}
+      ]
+    },
+    {
+      "scene_id": "s07",
+      "type": "kinetic",
+      "start": 8.4,
+      "duration": 1.0,
+      "vo": {
+        "text": "Three. Multimodal.",
+        "audio_file": "tts/s06.wav",
+        "duration_hint": 1.0
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "3",
+        "label": "multimodal",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s08",
+      "type": "broll",
+      "start": 9.4,
+      "duration": 1.5,
+      "enter": "snap",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "mind blown",
+        "clip_source": "giphy",
+        "clip_id": "XJtM2nNFCzT3etvzOB",
+        "clip_file": "clips/s07.mp4",
+        "clip_url": "https://giphy.com/gifs/XJtM2nNFCzT3etvzOB",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Still multimodal.",
+          "subtitle": "Since 4.0."
+        },
+        "lower_third": {
+          "headline": "always has been",
+          "subtitle": "since 4.0"
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s09",
+      "type": "kinetic",
+      "start": 10.9,
+      "duration": 1.0,
+      "vo": {
+        "text": "Four. Agentic.",
+        "audio_file": "tts/s08.wav",
+        "duration_hint": 1.0
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "4",
+        "label": "agentic",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "captions": [
+        {"text": "(sure)", "at": 0.5, "duration": 0.5, "position": "bottom-right", "color": "cyan", "size": "sm"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s10",
+      "type": "mockup",
+      "start": 11.9,
+      "duration": 2.6,
+      "enter": "fade",
+      "vo": {
+        "text": "Eight hundred and forty-three messages about whether to rebuild the product.",
+        "audio_file": "tts/s09.wav",
+        "duration_hint": 2.6
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "slack",
+        "mockup_data": {
+          "channel": "ai-strategy",
+          "messages": [
+            {"user": "cto",      "time": "Mon 8:02 AM", "text": "do we need to rebuild on 5.5?"},
+            {"user": "lead.dev", "time": "Mon 8:03 AM", "text": "we just rebuilt for 5.0"},
+            {"user": "cto",      "time": "Mon 8:03 AM", "text": "do we need to rebuild"},
+            {"user": "lead.dev", "time": "Mon 8:04 AM", "text": "yes"}
+          ]
+        }
+      },
+      "captions": [
+        {"text": "843 messages", "at": 0.4, "duration": 1.8, "position": "top-right", "color": "red", "size": "md"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "pop"},
+        {"at": 0.3, "name": "typewriter", "vol": 0.40}
+      ]
+    },
+    {
+      "scene_id": "s11",
+      "type": "card",
+      "start": 14.5,
+      "duration": 1.6,
+      "enter": "snap",
+      "vo": {
+        "text": "Your job is safe. Probably.",
+        "audio_file": "tts/s10.wav",
+        "duration_hint": 1.5
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Your job is safe.",
+        "subtitle": "Probably."
+      },
+      "captions": [
+        {"text": "(probably)", "at": 0.9, "duration": 0.6, "position": "bottom", "color": "red", "size": "md"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.55},
+        {"at": 1.1, "name": "ding", "vol": 0.45}
+      ]
+    },
+    {
+      "scene_id": "s12",
+      "type": "card",
+      "start": 16.1,
+      "duration": 1.2,
+      "enter": "snap",
+      "vo": {
+        "text": "ChatGPT six. Announced.",
+        "audio_file": "tts/s12.wav",
+        "duration_hint": 1.1
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "ChatGPT 6.",
+        "subtitle": "Announced."
+      },
+      "captions": [
+        {"text": "yesterday", "at": 0.5, "duration": 0.6, "position": "bottom-right", "color": "cyan", "size": "sm"}
+      ],
+      "sfx": [
+        {"at": 0.0, "name": "thud", "vol": 0.85}
+      ]
+    },
+    {
+      "scene_id": "s13",
+      "type": "card",
+      "style": "amiga",
+      "start": 17.3,
+      "duration": 1.7,
+      "enter": "fade",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM",
+        "subtitle": "Looks Good To Merge",
+        "amiga_title": "LGTM:DH0/release.run",
+        "amiga_icons": ["disk"]
+      },
+      "notes": "Silent button.",
+      "sfx": [
+        {"at": 0.3, "name": "thud", "vol": 0.9}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lgtm/episode",
+  "title": "LGTM Episode",
+  "description": "Top-level episode config. Controls the human approval gate and feeds RenderConfig.",
+  "type": "object",
+  "required": ["episode_id", "title", "brief", "status", "approved", "created_at", "render_config"],
+  "additionalProperties": false,
+  "properties": {
+
+    "episode_id": {
+      "type": "string",
+      "pattern": "^ep[0-9]{3,}$",
+      "description": "Stable identifier, e.g. ep001. Used as the episode directory name.",
+      "examples": ["ep001"]
+    },
+
+    "title": {
+      "type": "string",
+      "maxLength": 80,
+      "description": "Human-readable episode title. Used in distribution copy."
+    },
+
+    "brief": {
+      "type": "string",
+      "maxLength": 280,
+      "description": "The one-line brief that kicked off this episode."
+    },
+
+    "status": {
+      "type": "string",
+      "enum": ["draft", "awaiting-approval", "approved", "rendering", "rendered", "distributed"],
+      "description": "Pipeline stage. Renderer requires 'approved' or later."
+    },
+
+    "approved": {
+      "type": "boolean",
+      "description": "Human approval gate. Renderer exits immediately if false."
+    },
+
+    "approved_by": {
+      "type": "string",
+      "description": "Name or identifier of the human who set approved: true."
+    },
+
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of approval."
+    },
+
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of episode creation."
+    },
+
+    "render_config": {
+      "type": "object",
+      "description": "All render constants. No magic numbers in renderer.py — everything comes from here.",
+      "required": ["resolution", "fps", "background_color", "accent_color", "font_headline", "music_volume"],
+      "additionalProperties": false,
+      "properties": {
+        "resolution": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "[width, height] in pixels.",
+          "examples": [[1920, 1080]]
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 60,
+          "description": "Output frame rate.",
+          "examples": [30]
+        },
+        "background_color": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "RGB background. Brand value: [10, 10, 16].",
+          "examples": [[10, 10, 16]]
+        },
+        "accent_color": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "RGB accent. Brand value: [232, 160, 32].",
+          "examples": [[232, 160, 32]]
+        },
+        "font_headline": {
+          "type": "string",
+          "description": "Font name for headline text. Brand value: Consolas.",
+          "examples": ["Consolas"]
+        },
+        "font_size_headline": {
+          "type": "integer",
+          "description": "Headline font size in pixels. Omit to use renderer default.",
+          "examples": [72]
+        },
+        "font_size_subtitle": {
+          "type": "integer",
+          "description": "Subtitle font size in pixels. Omit to use renderer default.",
+          "examples": [36]
+        },
+        "lgtm_label_size": {
+          "type": "integer",
+          "description": "LGTM upper-left label font size in pixels. Omit to use renderer default.",
+          "examples": [24]
+        },
+        "music_volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.15,
+          "description": "Music bed volume multiplier. Hard ceiling: 0.15. VO is the signal.",
+          "examples": [0.12]
+        },
+        "broll_dim": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Opacity multiplier applied to B-roll clips. Brand value: 0.58.",
+          "examples": [0.58]
+        },
+        "ken_burns_scale": {
+          "type": "number",
+          "minimum": 1,
+          "description": "Ken Burns zoom scale for B-roll. Brand value: 1.07.",
+          "examples": [1.07]
+        }
+      }
+    },
+
+    "music": {
+      "type": "object",
+      "description": "Music bed for this episode. Written by audio-direction agent.",
+      "additionalProperties": false,
+      "properties": {
+        "track_path": {
+          "type": "string",
+          "description": "Relative path to music file within episode directory, or absolute path."
+        },
+        "track_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Source URL if track was downloaded."
+        },
+        "bpm": {
+          "type": ["number", "null"],
+          "description": "Beats per minute, if known."
+        },
+        "energy_arc": {
+          "type": "string",
+          "description": "Free-text description of desired energy arc, e.g. 'low and tense, rise at 45s'."
+        },
+        "fade_out_start": {
+          "type": "number",
+          "description": "Seconds from start at which music begins to fade. Omit to fade at total_duration - 2s."
+        }
+      }
+    },
+
+    "storyboard_path": {
+      "type": "string",
+      "description": "Relative path to storyboard.json within the episode directory.",
+      "default": "storyboard.json"
+    },
+
+    "paths": {
+      "type": "object",
+      "description": "Resolved paths for pipeline artifacts. Populated as pipeline runs.",
+      "additionalProperties": false,
+      "properties": {
+        "script": { "type": "string", "description": "Relative path to script.md" },
+        "visual_brief": { "type": "string", "description": "Relative path to visual-brief.md" },
+        "audio_direction": { "type": "string", "description": "Relative path to audio-direction.md" },
+        "tts_dir": { "type": "string", "description": "Relative path to TTS WAV directory", "default": "tts" },
+        "clips_dir": { "type": "string", "description": "Relative path to stock clip directory", "default": "clips" },
+        "output_dir": { "type": "string", "description": "Relative path to render output directory", "default": "output" },
+        "output_mp4": { "type": "string", "description": "Relative path to final MP4, populated after render." }
+      }
+    },
+
+    "distribution": {
+      "type": "object",
+      "description": "Distribution copy. Written by distribution agent after render.",
+      "additionalProperties": false,
+      "properties": {
+        "caption": {
+          "type": "string",
+          "maxLength": 2200,
+          "description": "Caption text (platform-agnostic long form)."
+        },
+        "hashtags": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^#" },
+          "maxItems": 30,
+          "description": "Hashtag list including # prefix."
+        },
+        "thumbnail_path": {
+          "type": "string",
+          "description": "Relative path to thumbnail image within episode directory."
+        },
+        "platforms": {
+          "type": "object",
+          "description": "Per-platform overrides for caption or hashtags.",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "caption": { "type": "string" },
+              "hashtags": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+
+  },
+  "examples": [
+    {
+      "episode_id": "ep001",
+      "title": "The Standup That Could Have Been an Email",
+      "brief": "A developer attends seven consecutive standups about canceling standups.",
+      "status": "awaiting-approval",
+      "approved": false,
+      "created_at": "2026-04-27T12:00:00Z",
+      "render_config": {
+        "resolution": [1920, 1080],
+        "fps": 30,
+        "background_color": [10, 10, 16],
+        "accent_color": [232, 160, 32],
+        "font_headline": "Consolas",
+        "music_volume": 0.12,
+        "broll_dim": 0.58,
+        "ken_burns_scale": 1.07
+      },
+      "storyboard_path": "storyboard.json",
+      "paths": {
+        "tts_dir": "tts",
+        "clips_dir": "clips",
+        "output_dir": "output"
+      }
+    }
+  ]
+}

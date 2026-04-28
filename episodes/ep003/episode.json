@@ -1,0 +1,28 @@
+{
+  "episode_id": "ep003",
+  "title": "The Standup",
+  "brief": "The standup was at 9 AM. It is now 9:47. No one mentioned it.",
+  "status": "approved",
+  "approved": true,
+  "approved_by": "James",
+  "approved_at": "2026-04-28T00:00:00Z",
+  "created_at": "2026-04-28T00:00:00Z",
+  "renderer": "remotion",
+  "render_config": {
+    "resolution": [1920, 1080],
+    "fps": 30,
+    "background_color": [10, 10, 16],
+    "accent_color": [232, 160, 32],
+    "font_headline": "Consolas",
+    "music_volume": 0.10,
+    "broll_dim": 0.58,
+    "ken_burns_scale": 1.07
+  },
+  "clip_sources": ["giphy"],
+  "storyboard_path": "storyboard.json",
+  "paths": {
+    "tts_dir": "tts",
+    "output_dir": "output",
+    "output_mp4": "output/episode.mp4"
+  }
+}

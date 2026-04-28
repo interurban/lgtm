@@ -1,0 +1,272 @@
+{
+  "episode_id": "ep002",
+  "total_duration": 30.1,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0.0,
+      "duration": 3.2,
+      "enter": "scale",
+      "vo": {
+        "text": "Acme Corp deployed OpenClaw to accelerate software delivery by forty percent.",
+        "audio_file": "tts/s01.wav",
+        "duration_hint": 3.0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Acme Corp.",
+        "subtitle": "The forty percent promise."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.45, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 3.2,
+      "duration": 2.0,
+      "vo": {
+        "text": "Nine months ago.",
+        "audio_file": "tts/s02.wav",
+        "duration_hint": 1.5
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "9",
+        "label": "Months Ago",
+        "color": "white",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s03",
+      "type": "card",
+      "start": 5.2,
+      "duration": 2.2,
+      "enter": "fade",
+      "vo": {
+        "text": "OpenClaw has not shipped a line of production code.",
+        "audio_file": "tts/s03.wav",
+        "duration_hint": 2.0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Zero lines.",
+        "subtitle": "In production."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.6}
+      ]
+    },
+    {
+      "scene_id": "s04",
+      "type": "broll",
+      "start": 7.4,
+      "duration": 3.5,
+      "enter": "fade",
+      "vo": {
+        "text": "The AI Governance Committee has met sixteen times.",
+        "audio_file": "tts/s04.wav",
+        "duration_hint": 3.0
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "boring office meeting man asleep bored",
+        "clip_source": "giphy",
+        "clip_id": "RGkHXDApwyQRm9AwLm",
+        "clip_file": "clips/s04.mp4",
+        "clip_url": "https://giphy.com/gifs/RGkHXDApwyQRm9AwLm",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "16 meetings.",
+          "subtitle": "AI Governance Committee."
+        },
+        "lower_third": {
+          "headline": "16 meetings.",
+          "subtitle": "AI Governance Committee."
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s05",
+      "type": "kinetic",
+      "start": 10.9,
+      "duration": 2.2,
+      "vo": {
+        "text": "Zero approvals granted.",
+        "audio_file": "tts/s05.wav",
+        "duration_hint": 1.8
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "0",
+        "label": "approvals",
+        "color": "red",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.45, "name": "ding", "vol": 0.5}
+      ]
+    },
+    {
+      "scene_id": "s06",
+      "type": "mockup",
+      "start": 13.1,
+      "duration": 5.0,
+      "enter": "fade",
+      "vo": {
+        "text": "A subcommittee was formed to establish a policy for approving access to the tool that governs the code.",
+        "audio_file": "tts/s06.wav",
+        "duration_hint": 4.6
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "jira",
+        "mockup_data": {
+          "key": "TECH-4477",
+          "title": "Establish OpenClaw Access Policy Framework for Policy Approvers",
+          "status": "In Progress",
+          "assignee": "AI Governance Subcommittee",
+          "reporter": "CTO",
+          "priority": "Low",
+          "sprint": "Q1 / 2025",
+          "created": "9 months ago",
+          "updated": "4 minutes ago",
+          "points": "∞",
+          "comments_count": 312,
+          "description_lines": [
+            "Per AI Steering Committee directive 2024-Q4,",
+            "this ticket tracks formation of a working group",
+            "to define access criteria for OpenClaw for",
+            "approved staff, pending approval. See also",
+            "TECH-4412 (governance of the governance).",
+            "Status: blocked on subcommittee charter."
+          ]
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "typewriter", "vol": 0.5},
+        {"at": 4.4, "name": "click", "vol": 0.6}
+      ]
+    },
+    {
+      "scene_id": "s07",
+      "type": "mockup",
+      "start": 18.1,
+      "duration": 4.5,
+      "enter": "fade",
+      "vo": {
+        "text": "Developers were encouraged to submit use cases via Form OC-7.",
+        "audio_file": "tts/s07.wav",
+        "duration_hint": 3.5
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "slack",
+        "mockup_data": {
+          "channel": "ai-tools",
+          "messages": [
+            {
+              "user": "d.patel",
+              "time": "10:22 AM",
+              "text": "hey can I start using OpenClaw for the auth refactor?"
+            },
+            {
+              "user": "oc-access-bot",
+              "time": "10:22 AM",
+              "text": "To request access, complete Form OC-7 at go/oc-request"
+            },
+            {
+              "user": "d.patel",
+              "time": "10:23 AM",
+              "text": "that link 404s"
+            },
+            {
+              "user": "oc-access-bot",
+              "time": "10:23 AM",
+              "text": "The form is under review. Expected resolution: next quarter."
+            }
+          ]
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "pop"},
+        {"at": 0.4, "name": "click", "vol": 0.5},
+        {"at": 3.9, "name": "ding", "vol": 0.4}
+      ]
+    },
+    {
+      "scene_id": "s08",
+      "type": "card",
+      "start": 22.6,
+      "duration": 2.0,
+      "enter": "snap",
+      "vo": {
+        "text": "The form was not found.",
+        "audio_file": "tts/s08.wav",
+        "duration_hint": 1.7
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Form OC-7.",
+        "subtitle": "404 Not Found."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh"},
+        {"at": 0.8, "name": "click", "vol": 0.6}
+      ]
+    },
+    {
+      "scene_id": "s09",
+      "type": "kinetic",
+      "start": 24.6,
+      "duration": 2.0,
+      "vo": {
+        "text": "Two point four million dollars.",
+        "audio_file": "tts/s09.wav",
+        "duration_hint": 1.8
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "$2.4M",
+        "label": "governance spend",
+        "color": "red",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"}
+      ]
+    },
+    {
+      "scene_id": "s10",
+      "type": "card",
+      "start": 26.6,
+      "duration": 3.5,
+      "enter": "fade",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM.",
+        "subtitle": "Looks Good To Merge.",
+        "headline_size": 180
+      },
+      "notes": "Silent button. Hard hold.",
+      "sfx": [
+        {"at": 0.4, "name": "thud", "vol": 0.9}
+      ]
+    }
+  ]
+}

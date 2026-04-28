@@ -1,0 +1,173 @@
+{
+  "episode_id": "ep003",
+  "total_duration": 18.0,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0.0,
+      "duration": 2.5,
+      "enter": "scale",
+      "vo": {
+        "text": "The standup was scheduled for nine AM.",
+        "audio_file": "tts/s01.wav",
+        "duration_hint": 2.2
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "9 AM.",
+        "subtitle": "The standup."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.4, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 2.5,
+      "duration": 2.5,
+      "vo": {
+        "text": "Forty-seven minutes late.",
+        "audio_file": "tts/s02.wav",
+        "duration_hint": 2.0
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "47",
+        "label": "Minutes Late",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "stinger"}
+      ]
+    },
+    {
+      "scene_id": "s03",
+      "type": "broll",
+      "start": 5.0,
+      "duration": 3.0,
+      "enter": "fade",
+      "vo": {
+        "text": "Seventeen people on the call. Zero cameras on.",
+        "audio_file": "tts/s03.wav",
+        "duration_hint": 2.8
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "office awkward silence cringe",
+        "clip_source": "giphy",
+        "clip_id": "jOpLbiGmHR9S0",
+        "clip_file": "clips/s03.mp4",
+        "clip_url": "https://giphy.com/gifs/jOpLbiGmHR9S0",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "17 attendees.",
+          "subtitle": "0 cameras on."
+        },
+        "lower_third": {
+          "headline": "17 attendees.",
+          "subtitle": "0 cameras on."
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.7}
+      ]
+    },
+    {
+      "scene_id": "s04",
+      "type": "card",
+      "start": 8.0,
+      "duration": 2.0,
+      "enter": "snap",
+      "vo": {
+        "text": "No one mentioned it.",
+        "audio_file": "tts/s04.wav",
+        "duration_hint": 1.8
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "No one mentioned it."
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.6}
+      ]
+    },
+    {
+      "scene_id": "s05",
+      "type": "broll",
+      "start": 10.0,
+      "duration": 3.5,
+      "enter": "fade",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "tumbleweed silence",
+        "clip_source": "giphy",
+        "clip_id": "JB7gDgg1BKjRu",
+        "clip_file": "clips/s05.mp4",
+        "clip_url": "https://giphy.com/gifs/JB7gDgg1BKjRu",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Follow-up items:",
+          "subtitle": "0 assigned."
+        },
+        "lower_third": {
+          "headline": "Follow-up items:",
+          "subtitle": "0 assigned."
+        }
+      },
+      "sfx": [
+        {"at": 0.0, "name": "whoosh", "vol": 0.5}
+      ]
+    },
+    {
+      "scene_id": "s06",
+      "type": "kinetic",
+      "start": 13.5,
+      "duration": 2.0,
+      "vo": {
+        "text": "Zero action items.",
+        "audio_file": "tts/s06.wav",
+        "duration_hint": 1.6
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "0",
+        "label": "action items",
+        "color": "red",
+        "label_color": "white"
+      },
+      "sfx": [
+        {"at": 0.0, "name": "thud"},
+        {"at": 0.45, "name": "ding", "vol": 0.5}
+      ]
+    },
+    {
+      "scene_id": "s07",
+      "type": "card",
+      "start": 15.5,
+      "duration": 2.5,
+      "enter": "fade",
+      "vo": {
+        "text": "",
+        "duration_hint": 0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM.",
+        "subtitle": "Looks Good To Merge.",
+        "headline_size": 180
+      },
+      "notes": "Silent button.",
+      "sfx": [
+        {"at": 0.4, "name": "thud", "vol": 0.9}
+      ]
+    }
+  ]
+}
