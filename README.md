@@ -16,9 +16,10 @@ Short-form video pipeline aimed at enterprise IT culture: **Mike Judge × Gary L
 | `render/remotion_renderer.py` | **Remotion** renderer — React/CSS motion graphics; Python builds the audio mix; FFmpeg muxes silent video + WAV |
 | `render/remotion/` | Remotion project (card, kinetic, b-roll, burst, Amiga bumper styles, captions, mockup PNG staging) |
 | `render/mockups.py` | PIL mockups (`slack`, `jira`, `calendar`, `code`) exported as PNG for Remotion or MoviePy |
-| `render/music.py` | Lo-fi-ish procedural music bed (numpy) mixed under VO |
 | `render/sfx.py` | Generates `assets/sfx/*.wav`; run `python render/sfx.py` after changing synth code |
 | `render/qa.py` | Optional post-render checks (streams, bitrate, duration); Remotion path runs this when wired |
+| `render/generate_assets.py` | Fetches custom generative b-roll imagery from Pollinations.ai for hyper-specific scenes |
+| `render/distribute.py` | Reads `distribution.md` and posts the video to Slack (defaults to dry-run unless `--execute` is passed) |
 | `.claude/agents/` | Claude Code agent definitions for the creative pipeline |
 | `REQUIREMENTS.md` | Brand + technical spec |
 | `CLAUDE.md` | Cursor / assistant project guide (paths, rules) |
@@ -52,12 +53,11 @@ brief → strategy → script → storyboard → [human approval: episode.json a
 
 ## Which renderer to use
 
-- **`render/renderer.py`** — full **MoviePy** stack: all scene types the Python code understands (cards, kinetic, b-roll, mockups, etc.).  
+- **`render/remotion_renderer.py`** — **(Recommended)** Use when **`episode.json`** sets **`"renderer": "remotion"`** (as in newer episodes). Renders visuals with Remotion, mixes audio in Python (music bed + VO + SFX), then FFmpeg-combines video and audio.
+- **`render/renderer.py`** — **(MoviePy fallback)** Full **MoviePy** stack: all scene types. Now supports parallel chunk rendering under the hood for much faster performance.
   ```bash
   python render/renderer.py --episode episodes/ep001/episode.json
   ```
-
-- **`render/remotion_renderer.py`** — use when **`episode.json`** sets **`"renderer": "remotion"`** (as in newer episodes). Renders visuals with Remotion, mixes audio in Python (music bed + VO + SFX), then FFmpeg-combines video and audio (**explicit `-map`** so muxed AAC is not swapped for silence).
 
 After **first** Remotion setup:
 
@@ -77,6 +77,8 @@ Output defaults to **`episodes/<id>/output/episode.mp4`**.
 |------|----------------|
 | Regenerate SFX library | `python render/sfx.py` → writes `assets/sfx/*.wav` |
 | Validate a rendered file | `python -c "from render.qa import qa_check; from pathlib import Path; print(qa_check(Path('episodes/ep004/output/episode.mp4'), 19.8))"` (adjust duration) |
+| Generate custom assets | `python render/generate_assets.py --episode episodes/ep001/episode.json` |
+| Distribute episode | `python render/distribute.py --episode episodes/ep001/episode.json --execute` |
 
 ---
 

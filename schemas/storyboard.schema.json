@@ -183,9 +183,13 @@
           "type": "string",
           "description": "Search terms used by clip-sourcer to find this clip, e.g. 'server room cables'."
         },
+        "generator_prompt": {
+          "type": "string",
+          "description": "Detailed image generation prompt used by image-generator (e.g. DALL-E) if custom imagery is required."
+        },
         "clip_source": {
           "type": "string",
-          "enum": ["pexels", "pixabay", "local"],
+          "enum": ["pexels", "pixabay", "local", "generated"],
           "description": "Where the clip was sourced."
         },
         "clip_id": {

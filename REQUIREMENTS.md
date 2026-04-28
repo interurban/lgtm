@@ -110,7 +110,7 @@ lgtm/
 |---|---|
 | Render engine | Python + MoviePy |
 | TTS | Kokoro-82M (local, existing venv) |
-| Stock video | Pexels API + Pixabay API |
+| Stock video | Pexels API + Pixabay API + Pollinations.ai (Generative) |
 | Agent system | Claude Code `.claude/agents/` |
 | Episode config | JSON (episode.schema.json) |
 | Storyboard | JSON (storyboard.schema.json) |

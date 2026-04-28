@@ -25,6 +25,9 @@ from moviepy import (
     concatenate_videoclips,
     concatenate_audioclips,
 )
+import concurrent.futures
+import subprocess
+import shutil
 from moviepy.audio.AudioClip import AudioArrayClip
 
 # Make this script runnable both as a module and as a top-level script
@@ -269,6 +272,48 @@ def build_sfx_track(scenes: list[dict], total_duration: float, cfg: RenderConfig
     return AudioArrayClip(track, fps=sr)
 
 
+def render_scene_chunk(scene: dict, cfg_dict: dict, episode_dir: Path, output_path: Path) -> str:
+    """Worker function to render a single scene's video to a chunk file."""
+    cfg = RenderConfig.from_dict(cfg_dict)
+    clip = build_scene(scene, cfg, episode_dir)
+    clip.write_videofile(
+        str(output_path),
+        fps=cfg.fps,
+        codec="libx264",
+        audio=False,
+        logger=None,  # quiet worker
+    )
+    clip.close()
+    return str(output_path)
+
+
+def build_vo_track(scenes: list[dict], episode_dir: Path) -> AudioArrayClip | None:
+    """Build a continuous VO track from scene configs."""
+    clips = []
+    total_dur = 0.0
+    for s in scenes:
+        dur = s["duration"]
+        total_dur += dur
+        vo = s.get("vo", {})
+        audio_file = vo.get("audio_file")
+        if audio_file and (episode_dir / audio_file).exists():
+            vo_audio = AudioFileClip(str(episode_dir / audio_file))
+            if vo_audio.duration < dur:
+                silence_len = dur - vo_audio.duration
+                silence = AudioArrayClip(np.zeros((int(silence_len * 44100), 2)), fps=44100)
+                vo_audio = concatenate_audioclips([vo_audio, silence])
+            else:
+                vo_audio = vo_audio.subclipped(0, dur)
+            clips.append(vo_audio)
+        else:
+            silence = AudioArrayClip(np.zeros((int(dur * 44100), 2)), fps=44100)
+            clips.append(silence)
+    
+    if not clips:
+        return None
+    return concatenate_audioclips(clips)
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -314,18 +359,42 @@ def main() -> int:
         print(f"ERROR: Missing audio_file for scenes: {missing_audio}", file=sys.stderr)
         return 1
 
-    print(f"Building {len(scenes)} scenes...")
-    scene_clips = [build_scene(s, cfg, episode_dir) for s in scenes]
+    output_dir = episode_dir / episode.get("paths", {}).get("output_dir", "output")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    chunks_dir = output_dir / "chunks"
+    if chunks_dir.exists():
+        shutil.rmtree(chunks_dir)
+    chunks_dir.mkdir(parents=True)
 
-    print("Concatenating scenes...")
-    final = concatenate_videoclips(scene_clips, method="compose")
+    print(f"Building {len(scenes)} scene chunks in parallel...")
+    chunk_paths = []
+    futures = []
+    
+    # Calculate total duration manually since we aren't concatenating video clips yet
+    total_duration = sum(s["duration"] for s in scenes)
+
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        for idx, s in enumerate(scenes):
+            chunk_path = chunks_dir / f"chunk_{idx:03d}.mp4"
+            chunk_paths.append(chunk_path)
+            futures.append(
+                executor.submit(
+                    render_scene_chunk, s, episode["render_config"], episode_dir, chunk_path
+                )
+            )
+        
+        for i, future in enumerate(concurrent.futures.as_completed(futures)):
+            future.result()  # raise exceptions if any
+            print(f"  ... finished chunk {i+1}/{len(scenes)}")
 
     # --- Audio composition: VO + SFX + music ---
+    print("Mixing master audio track...")
     audio_layers = []
-    if final.audio is not None:
-        audio_layers.append(final.audio)
+    vo_track = build_vo_track(scenes, episode_dir)
+    if vo_track is not None:
+        audio_layers.append(vo_track)
 
-    sfx_track = build_sfx_track(scenes, final.duration, cfg)
+    sfx_track = build_sfx_track(scenes, total_duration, cfg)
     if sfx_track is not None:
         sfx_count = sum(len(s.get("sfx", [])) for s in scenes)
         print(f"Mixing {sfx_count} SFX cues...")
@@ -340,32 +409,52 @@ def main() -> int:
             music_clip = AudioFileClip(str(music_file))
             vol = min(music.get("volume_override", cfg.music_volume), 0.15)
             music_clip = music_clip.with_volume_scaled(vol)
-            fade_start = music.get("fade_out_start", final.duration - 2.0)
-            fade_dur = min(2.0, max(0.5, final.duration - fade_start))
-            music_clip = music_clip.subclipped(0, final.duration).audio_fadeout(fade_dur)
+            fade_start = music.get("fade_out_start", total_duration - 2.0)
+            fade_dur = min(2.0, max(0.5, total_duration - fade_start))
+            music_clip = music_clip.subclipped(0, total_duration).audio_fadeout(fade_dur)
             audio_layers.append(music_clip)
         else:
             print(f"[warn] Music track not found: {music_file}, skipping.")
 
+    master_audio_path = chunks_dir / "master_audio.wav"
     if len(audio_layers) > 1:
-        final = final.with_audio(CompositeAudioClip(audio_layers))
+        master_audio = CompositeAudioClip(audio_layers)
     elif len(audio_layers) == 1:
-        final = final.with_audio(audio_layers[0])
+        master_audio = audio_layers[0]
+    else:
+        master_audio = AudioArrayClip(np.zeros((int(total_duration * 44100), 2)), fps=44100)
 
-    output_dir = episode_dir / episode.get("paths", {}).get("output_dir", "output")
-    output_dir.mkdir(parents=True, exist_ok=True)
+    master_audio.write_audiofile(str(master_audio_path), fps=44100, logger=None)
+
+    # --- FFmpeg Concat and Mux ---
+    print("Concatenating and muxing final output...")
+    concat_txt_path = chunks_dir / "concat.txt"
+    with concat_txt_path.open("w", encoding="utf-8") as f:
+        for cp in chunk_paths:
+            f.write(f"file '{cp.name}'\n")
+
     output_path = output_dir / "episode.mp4"
+    
+    ffmpeg_cmd = [
+        "ffmpeg", "-y",
+        "-f", "concat",
+        "-safe", "0",
+        "-i", str(concat_txt_path),
+        "-i", str(master_audio_path),
+        "-c:v", "copy",
+        "-c:a", "aac",
+        "-shortest",
+        str(output_path)
+    ]
+    
+    try:
+        subprocess.run(ffmpeg_cmd, check=True, cwd=str(chunks_dir), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError as e:
+        print(f"ERROR during FFmpeg muxing: {e}", file=sys.stderr)
+        return 1
 
-    print(f"Writing {output_path} ({final.duration:.1f}s @ {cfg.fps}fps)...")
-    final.write_videofile(
-        str(output_path),
-        fps=cfg.fps,
-        codec="libx264",
-        audio_codec="aac",
-        temp_audiofile=str(output_dir / "temp_audio.m4a"),
-        remove_temp=True,
-        logger="bar",
-    )
+    # Cleanup
+    shutil.rmtree(chunks_dir)
 
     print(f"\nDone. Output: {output_path}")
     return 0

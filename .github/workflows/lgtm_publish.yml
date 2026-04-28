@@ -1,0 +1,47 @@
+name: LGTM Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      episode_id:
+        description: 'Episode ID to render and publish (e.g., ep001)'
+        required: true
+        type: string
+
+jobs:
+  render-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          pip install moviepy numpy Pillow requests
+          
+      - name: Generate Custom Assets
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python render/generate_assets.py --episode episodes/${{ inputs.episode_id }}/episode.json
+
+      - name: Render Episode
+        run: |
+          python render/renderer.py --episode episodes/${{ inputs.episode_id }}/episode.json
+          
+      - name: Quality Assurance Check
+        run: |
+          python -c "from render.qa import qa_check; from pathlib import Path; import sys; sys.exit(0 if qa_check(Path('episodes/${{ inputs.episode_id }}/output/episode.mp4'), duration=0) else 1)"
+
+      - name: Distribute to Slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+        run: |
+          python render/distribute.py --episode episodes/${{ inputs.episode_id }}/episode.json
