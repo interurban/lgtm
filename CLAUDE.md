@@ -30,16 +30,18 @@ episodes/
 
 All paths in `episode.json` and `storyboard.json` are **relative to the episode directory root** (e.g. `tts/s01.wav`, not an absolute path).
 
-New episode = new directory + new JSON. Never new Python.
+New episode = new directory + new JSON. Do not add **episode-specific** Python; shared tooling under `render/` is OK.
 
 ## Pipeline order
 
 ```
 strategy → script → storyboard → [HUMAN GATE: approved: true]
   → claim-review + visual-brief + audio-direction (parallel)
-    → tts-builder + clip-sourcer (parallel)
+    → episode materialization (see below)
       → renderer → distribution
 ```
+
+**Episode materialization (binaries):** run **`python render/pipeline.py --episode episodes/{id}/episode.json`** so Kokoro TTS, stock APIs (Giphy/Pixabay/Pexels via `.env`), optional Pollinations assets from `generate_assets.py`, `production_check.py`, and **`render/renderer.py`** all run in order. Use **`--no-render`** before approval to only build `tts/` + `clips/`. Override Kokoro paths with **`LGTM_KOKORO_PYTHON`** and **`LGTM_KOKORO_SYNTH`** if defaults in this file do not match your machine.
 
 ## Hard rules
 

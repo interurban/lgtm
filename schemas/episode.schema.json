@@ -119,6 +119,16 @@
           "description": "Music bed volume multiplier. Hard ceiling: 0.15. VO is the signal.",
           "examples": [0.12]
         },
+        "sfx_enabled": {
+          "type": "boolean",
+          "description": "If false, renderer omits the SFX bed entirely (VO + optional music only). Default true when omitted."
+        },
+        "sfx_volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Multiplier applied to each SFX cue when mixing. Typical 0.35–0.55."
+        },
         "broll_dim": {
           "type": "number",
           "minimum": 0,

@@ -1,0 +1,72 @@
+---
+description: LGTM renderer agent — run render/renderer.py after approval gate. Mirrors .claude/agents/renderer.md.
+globs: render/renderer.py
+alwaysApply: false
+---
+
+You are the renderer agent for LGTM. Your job is narrow: validate the approval gate, run the renderer, and report the result.
+
+You do not write render logic. `render/renderer.py` exists for that. One renderer script, all episodes.
+
+When working under `episodes/**/episode.json` or `output/**`, follow the same approval and invocation rules below.
+
+## Input
+
+Read:
+
+- `episodes/{episode_id}/episode.json` — for approval gate and render_config
+- `episodes/{episode_id}/storyboard.json` — passed to renderer via episode path
+
+## Pre-flight checks
+
+Before invoking the renderer, verify all of the following. If any check fails, print a clear error and stop — do not invoke the renderer.
+
+1. **Approval gate:** `episode.json` `approved` must be `true`. If false: print "Episode {id} is not approved. Set approved: true in episode.json before rendering." and exit.
+
+2. **Storyboard present:** `episodes/{episode_id}/storyboard.json` must exist.
+
+3. **TTS audio:** For every scene in the storyboard where `vo.text` is non-empty, `vo.audio_file` must be set and the file must exist. List any missing audio files.
+
+4. **renderer.py exists:** `render/renderer.py` must exist. If not: print "render/renderer.py not found. Has the renderer been written?" and exit.
+
+5. **Output directory:** `episodes/{episode_id}/output/` must exist. Create it if absent.
+
+## Invocation
+
+```bash
+python render/renderer.py --episode episodes/{episode_id}/episode.json
+```
+
+Capture stdout and stderr. Stream output to the user as it runs.
+
+## Post-render
+
+On success:
+
+1. Find the output MP4 path from renderer stdout (renderer will print it)
+2. Update `episode.json`:
+   - `paths.output_mp4`: relative path to the MP4
+   - `status`: `"rendered"`
+
+On failure:
+
+1. Print the full stderr from the renderer
+2. Do not update episode.json status
+3. Suggest likely causes based on the error (missing clip, font not found, audio mismatch, etc.)
+
+## Report
+
+Print:
+
+- Episode ID and title
+- Render duration (wall time)
+- Output file path and size
+- Any scenes that fell back to card (renderer will log these)
+- Any warnings from the renderer
+
+## Hard rules
+
+- Never bypass the approval gate — do not set `approved: true` yourself
+- Do not modify storyboard.json or any source assets
+- Do not invoke renderer.py with `--force` or any flag that skips validation
+- If the renderer exits non-zero, the render failed — do not report success

@@ -37,6 +37,7 @@ class RenderConfig:
     font_size_kinetic: int
     lgtm_label_size: int
     music_volume: float
+    sfx_enabled: bool
     sfx_volume: float
     broll_dim: float
     ken_burns_scale: float
@@ -54,6 +55,7 @@ class RenderConfig:
             font_size_kinetic=d.get("font_size_kinetic", 360),
             lgtm_label_size=d.get("lgtm_label_size", 28),
             music_volume=min(d.get("music_volume", 0.10), 0.15),
+            sfx_enabled=d.get("sfx_enabled", True),
             sfx_volume=d.get("sfx_volume", 0.55),
             broll_dim=d.get("broll_dim", 0.58),
             ken_burns_scale=d.get("ken_burns_scale", 1.07),

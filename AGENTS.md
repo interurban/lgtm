@@ -11,9 +11,9 @@ Use this order unless the user asks for a narrower step:
 3. `storyboard` writes validated `storyboard.json`.
 4. Human approval gate: do not set `approved: true` yourself.
 5. `claim-review`, `visual-brief`, and `audio-direction` can run after approval.
-6. `tts-builder` and `clip-sourcer` can run after storyboard approval artifacts exist.
-7. Run `python render/production_check.py --episode episodes/{episode_id}/episode.json` before rendering. Fix failures instead of rendering through them.
-8. `renderer` runs the selected renderer and writes `output/episode.mp4`.
+6. After approval, **materialize the episode** with **`python render/pipeline.py --episode episodes/{episode_id}/episode.json`** (Kokoro TTS, Giphy/Pixabay/Pexels downloads per `clip_sources` + `.env`, optional Pollinations assets, `production_check`, then `renderer.py`). Use **`--no-render`** to only build `tts/` and `clips/` before `approved: true`. Individual `tts-builder` / `clip-sourcer` agent runs are optional if you use the pipeline.
+7. If not using the pipeline: run `python render/production_check.py --episode episodes/{episode_id}/episode.json --require-audio` before rendering.
+8. `renderer` runs the selected renderer and writes `output/episode.mp4` (also invoked at the end of `pipeline.py`).
 9. `distribution` writes publishing copy.
 
 ## Hard Rules

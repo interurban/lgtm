@@ -1,0 +1,13 @@
+---
+description: LGTM episode.json — orchestration touchpoint, approval gate, paths. Complements creative-director and renderer agents.
+globs: episodes/**/episode.json
+alwaysApply: false
+---
+
+When editing `episode.json` for LGTM:
+
+- **Canonical orchestration:** `.claude/agents/creative-director.md` and project rule `lgtm-pipeline-orchestration.mdc` (always-on pipeline).
+- **Human gate:** Do not set `approved: true` unless the human has reviewed the storyboard package; agents must not flip approval on their own.
+- **Paths:** All paths in `episode.json` (and `storyboard.json`) are relative to the episode directory root (`tts/`, `clips/`, `output/`, etc.).
+- **Render:** Only run `render/renderer.py` after `approved` is `true`, storyboard exists, and every non-empty VO has a real `audio_file`. See `lgtm-agent-renderer.mdc` and `.claude/agents/renderer.md`.
+- **Clip sources:** `clip_sources` order controls clip-sourcer; API keys live in `.env`. See `lgtm-agent-clip-sourcer.mdc`.

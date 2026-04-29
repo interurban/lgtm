@@ -1,0 +1,296 @@
+{
+  "episode_id": "ep009",
+  "total_duration": 39.8,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0.0,
+      "duration": 3.4,
+      "enter": "scale",
+      "vo": {
+        "text": "The AI standup bot posts green every day. That is the mandate.",
+        "duration_hint": 3.4
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Green every day.",
+        "subtitle": "That is the standup bot mandate."
+      },
+      "notes": "Hook: mandate vs reality."
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 3.4,
+      "duration": 2.2,
+      "enter": "none",
+      "vo": {
+        "text": "No blockers yesterday, today, or tomorrow's tomorrow.",
+        "duration_hint": 2.2
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "NONE",
+        "label": "blockers detected",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "notes": "Repetition beat."
+    },
+    {
+      "scene_id": "s03",
+      "type": "mockup",
+      "start": 5.6,
+      "duration": 5.0,
+      "enter": "fade",
+      "vo": {
+        "text": "Slack reads like morale, progress, and a spreadsheet someone definitely audited.",
+        "duration_hint": 5.0
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "slack",
+        "mockup_data": {
+          "channel": "standup-bot-feed",
+          "messages": [
+            {
+              "user": "standup-bot",
+              "time": "9:02 AM",
+              "text": "Daily standup summary: no blockers. Team health: green."
+            },
+            {
+              "user": "standup-bot",
+              "time": "9:02 AM",
+              "text": "Yesterday: no blockers. Today: no blockers. Carry on."
+            },
+            {
+              "user": "m.ortega",
+              "time": "9:04 AM",
+              "text": "INC-8812 is paging finance and three regions"
+            },
+            {
+              "user": "standup-bot",
+              "time": "9:04 AM",
+              "text": "Thanks for the transparency. Logging morale as steady."
+            }
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Slack says steady.",
+          "subtitle": "Finance is still paging."
+        }
+      },
+      "notes": "Bot vs human signal."
+    },
+    {
+      "scene_id": "s04",
+      "type": "kinetic",
+      "start": 10.6,
+      "duration": 2.8,
+      "enter": "snap",
+      "vo": {
+        "text": "The incident queue lies flat, then snaps upright.",
+        "duration_hint": 2.8
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "FLAT → ↑",
+        "label": "incident queue",
+        "color": "white",
+        "label_color": "red"
+      },
+      "notes": "Inflection kinetic."
+    },
+    {
+      "scene_id": "s05",
+      "type": "mockup",
+      "start": 13.4,
+      "duration": 4.5,
+      "enter": "snap",
+      "vo": {
+        "text": "JIRA labels it INC-8812: severity two, widening impact, twelve people in triage.",
+        "duration_hint": 4.5
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "jira",
+        "mockup_data": {
+          "key": "INC-8812",
+          "title": "Customer impact widening; cross-region paging; finance loop",
+          "status": "Triage",
+          "assignee": "Incident Commander",
+          "reporter": "PagerDuty",
+          "priority": "High",
+          "sprint": "Q2 / Stability theater",
+          "created": "47 minutes ago",
+          "updated": "2 minutes ago",
+          "points": "12",
+          "comments_count": 38,
+          "description_lines": [
+            "Standup bot reports no blockers.",
+            "Queue graph disagrees in a polite vertical line.",
+            "Action: schedule a retro about the retro."
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "INC-8812.",
+          "subtitle": "Twelve people in triage."
+        }
+      },
+      "notes": "Ticket bloat."
+    },
+    {
+      "scene_id": "s06",
+      "type": "kinetic",
+      "start": 17.9,
+      "duration": 2.6,
+      "enter": "none",
+      "vo": {
+        "text": "The dashboard draws a hockey stick. The legend stays polite.",
+        "duration_hint": 2.6
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "J",
+        "label": "unnamed hockey stick",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "notes": "Curve punch; value is minimal stick shape."
+    },
+    {
+      "scene_id": "s07",
+      "type": "mockup",
+      "start": 20.5,
+      "duration": 4.2,
+      "enter": "fade",
+      "vo": {
+        "text": "The calendar still books fifteen minutes because the bot marked the team healthy.",
+        "duration_hint": 4.2
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "calendar",
+        "mockup_data": {
+          "date": "Tuesday, April 28",
+          "time": "9:00 AM – 9:15 AM",
+          "title": "Daily standup — team health confirmed by automation",
+          "location": "Zoom / Green room",
+          "attendees": 14,
+          "organizer": "People Operations",
+          "attendee_names": [
+            "Standup Bot",
+            "Incident Commander",
+            "Finance liaison",
+            "+ 11 others"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Fifteen minutes reserved.",
+          "subtitle": "The bot said we were healthy."
+        }
+      },
+      "notes": "Calendar vs pager reality."
+    },
+    {
+      "scene_id": "s08",
+      "type": "broll",
+      "start": 24.7,
+      "duration": 4.8,
+      "enter": "fade",
+      "vo": {
+        "text": "Somewhere a pager learns fresh vocabulary and synonyms for severity one.",
+        "duration_hint": 4.8
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "stressed developer multiple monitors office typing",
+        "clip_source": "giphy",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "The pager upgrades English.",
+          "subtitle": "Severity one has synonyms now."
+        },
+        "lower_third": {
+          "headline": "On-call vocabulary",
+          "subtitle": "Expanding faster than the runbook"
+        }
+      },
+      "notes": "Single b-roll beat; Pixabay fallback order in episode clip_sources."
+    },
+    {
+      "scene_id": "s09",
+      "type": "mockup",
+      "start": 29.5,
+      "duration": 4.5,
+      "enter": "fade",
+      "vo": {
+        "text": "Twenty lines of code and a cron that expresses unconditional love at nine oh two.",
+        "duration_hint": 4.5
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "code",
+        "mockup_data": {
+          "filename": "standup_bot.py",
+          "language": "py",
+          "lines": [
+            "import schedule",
+            "",
+            "def post_green():",
+            "    slack.post(\"Daily standup: no blockers. Health: green.\")",
+            "",
+            "schedule.every().day.at(\"09:02\").do(post_green)",
+            "# TODO: read incident queue (non-blocking)"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Twenty lines.",
+          "subtitle": "Nine oh two unconditional love."
+        }
+      },
+      "notes": "Trivial automation source."
+    },
+    {
+      "scene_id": "s10",
+      "type": "kinetic",
+      "start": 34.0,
+      "duration": 2.8,
+      "enter": "snap",
+      "vo": {
+        "text": "The standup stays green. The curve keeps bending. Nobody means harm.",
+        "duration_hint": 2.8
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "GREEN",
+        "label": "curve still bending",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "notes": "Synthesis kinetic."
+    },
+    {
+      "scene_id": "s11",
+      "type": "card",
+      "start": 36.8,
+      "duration": 3.0,
+      "enter": "scale",
+      "vo": {
+        "text": "LGTM. Looks Good To Merge.",
+        "duration_hint": 3.0
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM.",
+        "subtitle": "Looks Good To Merge."
+      },
+      "notes": "Button."
+    }
+  ]
+}

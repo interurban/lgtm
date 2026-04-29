@@ -43,6 +43,7 @@ Given a one-line brief:
        "accent_color": [232, 160, 32],
        "font_headline": "Consolas",
        "music_volume": 0.12,
+       "sfx_enabled": false,
        "broll_dim": 0.58,
        "ken_burns_scale": 1.07
      }
@@ -86,13 +87,21 @@ Update `episode.json` `status` to `"approved"`.
 
 ### Stage 5 — Asset production (parallel)
 
-Invoke in parallel:
+Preferred: run the **repo pipeline** so nothing is skipped (TTS, clip APIs, optional Pollinations assets, production check, render):
+
+```bash
+python render/pipeline.py --episode episodes/{episode_id}/episode.json
+```
+
+Use `--draft` if you must allow missing b-roll files (production check only); the renderer still requires `approved: true`.
+
+Alternatively invoke agents/tools in parallel (same outcome only if every step actually runs):
 - **tts-builder** → reads `storyboard.json`, writes `tts/*.wav`, updates `storyboard.json` with `audio_file` paths
-- **clip-sourcer** → reads `storyboard.json` + `visual-brief.md`, downloads clips, writes `clips/*.mp4`, updates `storyboard.json` with `clip_file` paths
+- **clip-sourcer** → same inputs; in-repo implementation is `python render/clip_fetch.py --episode ...` (Giphy / Pixabay / Pexels per `clip_sources` + `.env` keys)
 
 ### Stage 6 — Render
 
-Invoke **renderer** → reads `episode.json` + `storyboard.json`, writes `output/episode.mp4`.
+The pipeline ends with **renderer** → `output/episode.mp4`. If not using `pipeline.py`, invoke `python render/renderer.py --episode episodes/{episode_id}/episode.json` only after production check passes.
 
 Update `episode.json` `status` to `"rendered"` and `paths.output_mp4`.
 

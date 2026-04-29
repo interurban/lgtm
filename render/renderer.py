@@ -409,11 +409,14 @@ def main() -> int:
     if vo_track is not None:
         audio_layers.append(vo_track)
 
-    sfx_track = build_sfx_track(scenes, total_duration, cfg)
-    if sfx_track is not None:
-        sfx_count = sum(len(s.get("sfx", [])) for s in scenes)
-        print(f"Mixing {sfx_count} SFX cues...")
-        audio_layers.append(sfx_track)
+    if cfg.sfx_enabled:
+        sfx_track = build_sfx_track(scenes, total_duration, cfg)
+        if sfx_track is not None:
+            sfx_count = sum(len(s.get("sfx", [])) for s in scenes)
+            print(f"Mixing {sfx_count} SFX cues...")
+            audio_layers.append(sfx_track)
+    else:
+        print("SFX disabled (render_config.sfx_enabled: false); VO (+ music if any) only.")
 
     music = episode.get("music", {})
     music_path = music.get("track_path")

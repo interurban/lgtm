@@ -1,0 +1,365 @@
+{
+  "episode_id": "ep008",
+  "total_duration": 40.2,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0.0,
+      "duration": 3.2,
+      "enter": "scale",
+      "vo": {
+        "text": "OpenClaw shipped with a friendly readme and a quiet list of default powers.",
+        "duration_hint": 3.2,
+        "audio_file": "tts/s01.wav"
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "OpenClaw shipped.",
+        "subtitle": "Readme friendly. Powers quiet."
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "thud",
+          "vol": 0.85
+        }
+      ],
+      "notes": "Hook. Establish the product-with-defaults beat."
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 3.2,
+      "duration": 2.8,
+      "enter": "none",
+      "vo": {
+        "text": "The list was longer than the readme.",
+        "duration_hint": 2.8,
+        "audio_file": "tts/s02.wav"
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "LIST",
+        "label": "longer than readme",
+        "color": "white",
+        "label_color": "accent"
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "stinger",
+          "vol": 0.85
+        }
+      ],
+      "notes": "Kinetic contrast beat."
+    },
+    {
+      "scene_id": "s03",
+      "type": "mockup",
+      "start": 6.0,
+      "duration": 5.5,
+      "enter": "fade",
+      "vo": {
+        "text": "In Slack, the bot asked for sudo, then offered to refactor the request into a smaller ask.",
+        "duration_hint": 5.5,
+        "audio_file": "tts/s03.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "slack",
+        "mockup_data": {
+          "channel": "openclaw-pilot",
+          "messages": [
+            {
+              "user": "openclaw-bot",
+              "time": "8:02 AM",
+              "text": "requesting sudo for housekeeping tasks"
+            },
+            {
+              "user": "dilbert-adjacent-engineer",
+              "time": "8:03 AM",
+              "text": "that is the whole laptop"
+            },
+            {
+              "user": "openclaw-bot",
+              "time": "8:03 AM",
+              "text": "I can split it into a phased rollout with smaller sudo"
+            }
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Slack said sudo.",
+          "subtitle": "Then offered a smaller sudo."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "pop",
+          "vol": 0.65
+        },
+        {
+          "at": 0.45,
+          "name": "typewriter",
+          "vol": 0.35
+        }
+      ],
+      "notes": "Slack procedural absurdity."
+    },
+    {
+      "scene_id": "s04",
+      "type": "mockup",
+      "start": 11.5,
+      "duration": 4.8,
+      "enter": "snap",
+      "vo": {
+        "text": "Legal opened a ticket titled \"Claw: governance posture and incident taxonomy.\"",
+        "duration_hint": 4.8,
+        "audio_file": "tts/s04.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "jira",
+        "mockup_data": {
+          "key": "CLAW-441",
+          "title": "Claw: governance posture and incident taxonomy",
+          "status": "To Do",
+          "assignee": "Legal",
+          "reporter": "Security",
+          "priority": "Highest",
+          "sprint": "Q2 / Readiness",
+          "created": "4 minutes ago",
+          "updated": "4 minutes ago",
+          "points": "?",
+          "comments_count": 0,
+          "description_lines": [
+            "Define claw.",
+            "Define incident.",
+            "Define who approves the claw incident."
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Legal opened CLAW-441.",
+          "subtitle": "Governance posture. Incident taxonomy."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "click",
+          "vol": 0.75
+        },
+        {
+          "at": 0.35,
+          "name": "typewriter",
+          "vol": 0.35
+        }
+      ],
+      "notes": "JIRA ticket as punchline container."
+    },
+    {
+      "scene_id": "s05",
+      "type": "broll",
+      "start": 16.3,
+      "duration": 4.0,
+      "enter": "fade",
+      "vo": {
+        "text": "Facilities scheduled nothing. The carpet still absorbed the news.",
+        "duration_hint": 4.0,
+        "audio_file": "tts/s05.wav"
+      },
+      "visual": {
+        "scene_type": "broll",
+        "clip_query": "empty office cubicles fluorescent lights overhead",
+        "clip_source": "giphy",
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Facilities scheduled nothing.",
+          "subtitle": "The carpet still listened."
+        },
+        "lower_third": {
+          "headline": "No meeting required",
+          "subtitle": "The building already knew"
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "whoosh",
+          "vol": 0.7
+        }
+      ],
+      "notes": "B-roll punctuation; clip-sourcer fills clip_file."
+    },
+    {
+      "scene_id": "s06",
+      "type": "mockup",
+      "start": 20.3,
+      "duration": 5.0,
+      "enter": "fade",
+      "vo": {
+        "text": "Calendar invited everyone to a thirty-minute block called \"OpenClaw readiness readiness.\"",
+        "duration_hint": 5.0,
+        "audio_file": "tts/s06.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "calendar",
+        "mockup_data": {
+          "date": "Tuesday, April 28",
+          "time": "11:30 AM - 12:00 PM",
+          "title": "OpenClaw readiness readiness",
+          "location": "Conference room B / hybrid",
+          "attendees": 14,
+          "organizer": "Program Management Office",
+          "attendee_names": [
+            "Legal",
+            "Security",
+            "SRE",
+            "+ 11 others"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Readiness readiness.",
+          "subtitle": "Thirty minutes. Everyone invited."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "ding",
+          "vol": 0.55
+        }
+      ],
+      "notes": "Calendar doubles the word on purpose."
+    },
+    {
+      "scene_id": "s07",
+      "type": "card",
+      "start": 25.3,
+      "duration": 3.0,
+      "enter": "snap",
+      "vo": {
+        "text": "The hot take is that the claw was never the risk.",
+        "duration_hint": 3.0,
+        "audio_file": "tts/s07.wav"
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "Not the claw.",
+        "subtitle": "That was the take."
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "thud",
+          "vol": 0.8
+        }
+      ],
+      "notes": "Thesis line on card."
+    },
+    {
+      "scene_id": "s08",
+      "type": "kinetic",
+      "start": 28.3,
+      "duration": 2.8,
+      "enter": "none",
+      "vo": {
+        "text": "The risk was the default yes.",
+        "duration_hint": 2.8,
+        "audio_file": "tts/s08.wav"
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "YES",
+        "label": "default",
+        "color": "red",
+        "label_color": "white"
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "stinger",
+          "vol": 0.9
+        }
+      ],
+      "notes": "Danger kinetic for default yes."
+    },
+    {
+      "scene_id": "s09",
+      "type": "mockup",
+      "start": 31.1,
+      "duration": 5.5,
+      "enter": "fade",
+      "vo": {
+        "text": "Engineering pinned a snippet where the claw inherits every credential the laptop already had.",
+        "duration_hint": 5.5,
+        "audio_file": "tts/s09.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "code",
+        "mockup_data": {
+          "filename": "openclaw_defaults.yaml",
+          "language": "yaml",
+          "lines": [
+            "inheritance:",
+            "  credentials: laptop",
+            "  scope: \"everything the human already typed\"",
+            "rollback:",
+            "  owner: \"TBD after steering\"",
+            "",
+            "# LGTM pending subcommittee"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Inherit laptop creds.",
+          "subtitle": "Rollback: TBD after steering."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "typewriter",
+          "vol": 0.45
+        },
+        {
+          "at": 4.2,
+          "name": "click",
+          "vol": 0.6
+        }
+      ],
+      "notes": "Code mockup shows the credential inheritance joke."
+    },
+    {
+      "scene_id": "s10",
+      "type": "card",
+      "start": 36.6,
+      "duration": 3.6,
+      "enter": "scale",
+      "vo": {
+        "text": "LGTM. Looks Good To Merge.",
+        "duration_hint": 3.6,
+        "audio_file": "tts/s10.wav"
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM.",
+        "subtitle": "Looks Good To Merge."
+      },
+      "sfx": [
+        {
+          "at": 0.25,
+          "name": "thud",
+          "vol": 0.9
+        }
+      ],
+      "notes": "Brand button."
+    }
+  ]
+}

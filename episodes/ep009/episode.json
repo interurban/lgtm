@@ -1,0 +1,29 @@
+{
+  "episode_id": "ep009",
+  "title": "No Blockers, Hockey Stick Queue",
+  "brief": "The AI standup bot posts 'no blockers' every day while the incident queue graphs a perfect hockey stick.",
+  "status": "awaiting-approval",
+  "approved": false,
+  "created_at": "2026-04-28T20:00:00Z",
+  "render_config": {
+    "resolution": [1920, 1080],
+    "fps": 30,
+    "background_color": [10, 10, 16],
+    "accent_color": [232, 160, 32],
+    "font_headline": "Consolas",
+    "music_volume": 0.12,
+    "sfx_enabled": false,
+    "broll_dim": 0.58,
+    "ken_burns_scale": 1.07
+  },
+  "clip_sources": ["giphy", "pixabay"],
+  "storyboard_path": "storyboard.json",
+  "paths": {
+    "script": "script.md",
+    "visual_brief": "visual-brief.md",
+    "audio_direction": "audio-direction.md",
+    "tts_dir": "tts",
+    "clips_dir": "clips",
+    "output_dir": "output"
+  }
+}
