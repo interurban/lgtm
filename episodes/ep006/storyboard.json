@@ -1,0 +1,68 @@
+{
+  "episode_id": "ep006",
+  "total_duration": 22.0,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0,
+      "duration": 6.0,
+      "vo": {
+        "text": "OpenClaw is the new corporate policy that promises seamless automation across sales, support, and security.",
+        "audio_file": "tts/s01.wav",
+        "duration_hint": 7.97
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "OpenClaw is here.",
+        "subtitle": "It is mostly flowcharts and mandatory meetings."
+      },
+      "notes": "Intro title card."
+    },
+    {
+      "scene_id": "s02",
+      "type": "mockup",
+      "start": 6.0,
+      "duration": 10.0,
+      "vo": {
+        "text": "The kickoff meeting is at 10 a.m. on a Wednesday, which is definitely when people are most excited about another status update.",
+        "audio_file": "tts/s02.wav",
+        "duration_hint": 9.0
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "calendar",
+        "mockup_data": {
+          "date": "Wednesday, April 30",
+          "time": "10:00 AM – 11:00 AM",
+          "title": "OpenClaw Steering Committee",
+          "attendees": 14,
+          "location": "Conference Room B",
+          "organizer": "Acme AI Governance"
+        },
+        "lower_third": {
+          "headline": "Mandatory kickoff",
+          "subtitle": "Another calendar invite for the AI policy rollout."
+        }
+      },
+      "notes": "Calendar mockup for the OpenClaw kickoff meeting."
+    },
+    {
+      "scene_id": "s03",
+      "type": "card",
+      "start": 16.0,
+      "duration": 6.0,
+      "vo": {
+        "text": "Dilbert is not convinced that turning the office printer into a sentient compliance officer is the right approach.",
+        "audio_file": "tts/s03.wav",
+        "duration_hint": 8.03
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "The all-knowing office printer",
+        "subtitle": "Still waiting for the approval flowchart."
+      },
+      "notes": "Closing punchline card."
+    }
+  ]
+}

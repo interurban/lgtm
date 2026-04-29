@@ -276,14 +276,29 @@ def render_scene_chunk(scene: dict, cfg_dict: dict, episode_dir: Path, output_pa
     """Worker function to render a single scene's video to a chunk file."""
     cfg = RenderConfig.from_dict(cfg_dict)
     clip = build_scene(scene, cfg, episode_dir)
-    clip.write_videofile(
-        str(output_path),
-        fps=cfg.fps,
-        codec="libx264",
-        audio=False,
-        logger=None,  # quiet worker
-    )
-    clip.close()
+    try:
+        clip.write_videofile(
+            str(output_path),
+            fps=cfg.fps,
+            codec="libx264",
+            audio=False,
+            logger=None,  # quiet worker
+        )
+    finally:
+        try:
+            clip.close()
+        except Exception:
+            pass
+        if hasattr(clip, "reader"):
+            try:
+                clip.reader.close()
+            except Exception:
+                pass
+        if hasattr(clip, "audio") and clip.audio:
+            try:
+                clip.audio.close_proc()
+            except Exception:
+                pass
     return str(output_path)
 
 
@@ -425,6 +440,10 @@ def main() -> int:
         master_audio = AudioArrayClip(np.zeros((int(total_duration * 44100), 2)), fps=44100)
 
     master_audio.write_audiofile(str(master_audio_path), fps=44100, logger=None)
+    try:
+        master_audio.close()
+    except Exception:
+        pass
 
     # --- FFmpeg Concat and Mux ---
     print("Concatenating and muxing final output...")
@@ -447,14 +466,27 @@ def main() -> int:
         str(output_path)
     ]
     
-    try:
-        subprocess.run(ffmpeg_cmd, check=True, cwd=str(chunks_dir), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except subprocess.CalledProcessError as e:
-        print(f"ERROR during FFmpeg muxing: {e}", file=sys.stderr)
+    result = subprocess.run(
+        ffmpeg_cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if result.returncode != 0:
+        print("ERROR during FFmpeg muxing:", file=sys.stderr)
+        if result.stderr.strip():
+            print(result.stderr.strip(), file=sys.stderr)
+        if result.stdout.strip():
+            print(result.stdout.strip(), file=sys.stderr)
+        print(f"FFmpeg exit code: {result.returncode}", file=sys.stderr)
+        print(f"FFmpeg command: {ffmpeg_cmd}", file=sys.stderr)
         return 1
 
     # Cleanup
-    shutil.rmtree(chunks_dir)
+    try:
+        shutil.rmtree(chunks_dir)
+    except Exception as exc:
+        print(f"[warn] could not remove chunks dir: {exc}", file=sys.stderr)
 
     print(f"\nDone. Output: {output_path}")
     return 0
