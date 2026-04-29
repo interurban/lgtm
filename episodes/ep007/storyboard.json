@@ -1,0 +1,378 @@
+{
+  "episode_id": "ep007",
+  "total_duration": 41.6,
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "type": "card",
+      "start": 0.0,
+      "duration": 3.4,
+      "enter": "scale",
+      "vo": {
+        "text": "DHH used to type the code himself.",
+        "duration_hint": 3.45,
+        "audio_file": "tts/s01.wav"
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "DHH typed it.",
+        "subtitle": "By hand. On purpose."
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "thud",
+          "vol": 0.8
+        }
+      ],
+      "notes": "Cold open. Establish the before state."
+    },
+    {
+      "scene_id": "s02",
+      "type": "kinetic",
+      "start": 3.4,
+      "duration": 3.0,
+      "vo": {
+        "text": "Six months later, the agent goes first.",
+        "duration_hint": 3.33,
+        "audio_file": "tts/s02.wav"
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "6",
+        "label": "months later: agent first",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "stinger",
+          "vol": 0.85
+        }
+      ],
+      "notes": "Source-backed time contrast from the Pragmatic Engineer framing."
+    },
+    {
+      "scene_id": "s03",
+      "type": "mockup",
+      "start": 6.4,
+      "duration": 5.2,
+      "enter": "fade",
+      "vo": {
+        "text": "Not because the chatbot became wise. Because it got a terminal, tests, and a filesystem.",
+        "duration_hint": 5.67,
+        "audio_file": "tts/s03.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "code",
+        "mockup_data": {
+          "filename": "agent_handoff.sh",
+          "language": "sh",
+          "lines": [
+            "# previous workflow",
+            "vim app/models/invoice.rb",
+            "",
+            "# current workflow",
+            "codex \"make the billing job idempotent\"",
+            "pytest tests/billing",
+            "git diff --stat"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "The agent got tools.",
+          "subtitle": "Terminal. Tests. Filesystem."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "typewriter",
+          "vol": 0.45
+        }
+      ],
+      "notes": "Code mockup visualizes why agentic coding is different."
+    },
+    {
+      "scene_id": "s04",
+      "type": "kinetic",
+      "start": 11.6,
+      "duration": 3.6,
+      "vo": {
+        "text": "Autocomplete suggested the next token.",
+        "duration_hint": 3.48,
+        "audio_file": "tts/s04.wav"
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "TOKEN",
+        "label": "not the whole job",
+        "color": "white",
+        "label_color": "accent"
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "click",
+          "vol": 0.8
+        },
+        {
+          "at": 0.45,
+          "name": "click",
+          "vol": 0.6
+        }
+      ],
+      "notes": "Sets up contrast with Codex as task agent."
+    },
+    {
+      "scene_id": "s05",
+      "type": "mockup",
+      "start": 15.2,
+      "duration": 5.0,
+      "enter": "snap",
+      "vo": {
+        "text": "Codex volunteers for the whole ticket, then leaves a pull request on the porch.",
+        "duration_hint": 5.67,
+        "audio_file": "tts/s05.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "jira",
+        "mockup_data": {
+          "key": "RAILS-1979",
+          "title": "Refactor billing without a steering committee",
+          "status": "In Progress",
+          "assignee": "Codex",
+          "reporter": "DHH",
+          "priority": "Medium",
+          "sprint": "Agent-first pilot",
+          "created": "6 minutes ago",
+          "updated": "11 seconds ago",
+          "points": "unknown",
+          "comments_count": 1,
+          "description_lines": [
+            "Open a branch.",
+            "Make the smallest coherent patch.",
+            "Run the tests.",
+            "Leave the diff where a human can find it."
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Codex took the ticket.",
+          "subtitle": "It left a pull request."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "pop",
+          "vol": 0.7
+        },
+        {
+          "at": 0.35,
+          "name": "typewriter",
+          "vol": 0.35
+        }
+      ],
+      "notes": "JIRA mockup provides the bureaucratic joke."
+    },
+    {
+      "scene_id": "s06",
+      "type": "mockup",
+      "start": 20.2,
+      "duration": 5.1,
+      "enter": "fade",
+      "vo": {
+        "text": "The human job moves from typing every line to deciding which lines deserve to exist.",
+        "duration_hint": 6.62,
+        "audio_file": "tts/s06.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "slack",
+        "mockup_data": {
+          "channel": "code-review",
+          "messages": [
+            {
+              "user": "codex",
+              "time": "9:41 AM",
+              "text": "opened PR #4821: make billing job idempotent"
+            },
+            {
+              "user": "ci-bot",
+              "time": "9:42 AM",
+              "text": "tests passed. coverage unchanged."
+            },
+            {
+              "user": "dhh",
+              "time": "9:47 AM",
+              "text": "reading the diff now."
+            },
+            {
+              "user": "codex",
+              "time": "9:47 AM",
+              "text": "standing by with excessive confidence."
+            }
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "The job moved.",
+          "subtitle": "From typing to review."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "pop",
+          "vol": 0.65
+        },
+        {
+          "at": 0.5,
+          "name": "typewriter",
+          "vol": 0.35
+        }
+      ],
+      "notes": "Slack mockup makes the handoff visible."
+    },
+    {
+      "scene_id": "s07",
+      "type": "kinetic",
+      "start": 25.3,
+      "duration": 3.2,
+      "vo": {
+        "text": "That is still programming.",
+        "duration_hint": 2.27,
+        "audio_file": "tts/s07.wav"
+      },
+      "visual": {
+        "scene_type": "kinetic",
+        "value": "REVIEW",
+        "label": "is the job",
+        "color": "accent",
+        "label_color": "white"
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "thud",
+          "vol": 0.85
+        }
+      ],
+      "notes": "Thesis beat."
+    },
+    {
+      "scene_id": "s08",
+      "type": "mockup",
+      "start": 28.5,
+      "duration": 4.8,
+      "enter": "fade",
+      "vo": {
+        "text": "It is the part management forgot to automate.",
+        "duration_hint": 3.25,
+        "audio_file": "tts/s08.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "calendar",
+        "mockup_data": {
+          "date": "Wednesday, April 29",
+          "time": "4:00 PM - 4:15 PM",
+          "title": "Merge Approval Committee",
+          "attendees": 1,
+          "organizer": "Repository Governance",
+          "attendee_names": [
+            "DHH"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Merge committee.",
+          "subtitle": "Attendance: one human."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "ding",
+          "vol": 0.6
+        }
+      ],
+      "notes": "Calendar mockup turns review into office procedure."
+    },
+    {
+      "scene_id": "s09",
+      "type": "mockup",
+      "start": 33.3,
+      "duration": 4.9,
+      "enter": "snap",
+      "vo": {
+        "text": "Codex can draft the patch. It cannot lend you taste.",
+        "duration_hint": 4.15,
+        "audio_file": "tts/s09.wav"
+      },
+      "visual": {
+        "scene_type": "mockup",
+        "mockup_type": "code",
+        "mockup_data": {
+          "filename": "pull_request.diff",
+          "language": "ts",
+          "lines": [
+            "+ const patch = await codex.draft(ticket);",
+            "+ await tests.run();",
+            "- return approveBecauseItCompiled();",
+            "+ return human.readsTheDiff(patch);",
+            "",
+            "// taste remains a required dependency"
+          ]
+        },
+        "fallback": {
+          "scene_type": "card",
+          "headline": "Codex drafts.",
+          "subtitle": "Taste is still manual."
+        }
+      },
+      "sfx": [
+        {
+          "at": 0.0,
+          "name": "typewriter",
+          "vol": 0.45
+        },
+        {
+          "at": 3.7,
+          "name": "thud",
+          "vol": 0.7
+        }
+      ],
+      "notes": "Final conceptual image before LGTM."
+    },
+    {
+      "scene_id": "s10",
+      "type": "card",
+      "start": 38.2,
+      "duration": 3.4,
+      "enter": "scale",
+      "vo": {
+        "text": "LGTM. Looks Good To Merge.",
+        "duration_hint": 3.08,
+        "audio_file": "tts/s10.wav"
+      },
+      "visual": {
+        "scene_type": "card",
+        "headline": "LGTM.",
+        "subtitle": "Looks Good To Merge."
+      },
+      "sfx": [
+        {
+          "at": 0.25,
+          "name": "thud",
+          "vol": 0.9
+        }
+      ],
+      "notes": "Final brand button."
+    }
+  ]
+}

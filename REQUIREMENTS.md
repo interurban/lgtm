@@ -42,6 +42,27 @@ Brief
 
 Human gate is non-negotiable. Renderer reads `approved` from episode.json and exits if `false`.
 
+### Rules posture (strict vs loose)
+
+| Strict (machine / gate) | Loose (creative / taste) |
+|-------------------------|---------------------------|
+| `approved: true` before final render | Hook wording, scene count, mockup copy |
+| `python render/production_check.py` before calling a build “done” | Whether a Giphy read is *funny* |
+| Schema-valid `storyboard.json` | Pacing inside a mockup scene |
+| `python render/pipeline.py` so TTS + clip download + check + render are not skipped | Brand voice micro-choices in strategy.md |
+
+**Operational rigidity was too loose** when only markdown agents ran and someone invoked `renderer.py` alone. **Creative rigidity is too tight** if JSON/schema work blocks iteration — use `--draft` on production check and iterate storyboard before locking approval.
+
+### One-command materialization
+
+After the human gate and post-approval markdown exist, build binaries and MP4 with:
+
+```bash
+python render/pipeline.py --episode episodes/ep008/episode.json
+```
+
+`--no-render` builds TTS + clips (+ optional Pollinations assets) only, for work-in-progress before approval. `--draft` relaxes b-roll file requirements in `production_check` only.
+
 ## Agent Roster
 
 | Agent | File | Role |
@@ -63,6 +84,8 @@ Human gate is non-negotiable. Renderer reads `approved` from episode.json and ex
 | Type | Description |
 |---|---|
 | `card` | Dark background + LGTM label + headline + subtitle |
+| `kinetic` | Animated number/phrase reveal for concepts, counts, and turns |
+| `mockup` | Fake Slack, JIRA, calendar, or code artifact rendered as an image scene |
 | `broll` | Stock clip + 0.58 dim + Ken Burns 1.07× zoom + optional lower-third scrim |
 | `screen-recording` | Local video file + optional lower-third |
 | `talking-head` | Local video clip |
@@ -70,12 +93,34 @@ Human gate is non-negotiable. Renderer reads `approved` from episode.json and ex
 ## Hard Rules
 
 1. **One renderer script** reads all episodes. New episode = new JSON, never new Python.
-2. **One frame type: dark card.** No bespoke animated frame generators.
+2. **One visual system.** Use the shared card, kinetic, mockup, b-roll, and video scene types. No one-off episode render code.
 3. **Human approval gate is non-negotiable.** Renderer exits if `approved: false`.
 4. **Agents write markdown. Tools write files.** Never mix creative logic and render logic.
 5. **Graceful degradation:** missing B-roll clip → fall back to `card`, never hard-fail.
 6. **No magic numbers in render code.** Everything flows from a `RenderConfig` built from episode JSON.
 7. **Music bed ≤ 0.15 volume.** VO is the signal.
+8. **Production check before render.** `python render/production_check.py --episode episodes/{id}/episode.json --require-audio` must pass before a render can be called final.
+9. **No fallback-card final videos.** Missing B-roll must be sourced, replaced with `mockup`/`kinetic`, or explicitly marked as draft-only.
+
+## Episode eval (know problems before export)
+
+Automated checks cannot taste humor, but they **can** catch the issues that made ep008 feel wrong: missing clips, slow pacing, SFX mud, no music.
+
+**Tier 0 — mandatory (machine, fast)**  
+Run `render/production_check.py` **before** `renderer.py`:
+
+- **FAIL:** missing b-roll files (unless `--allow-fallbacks` for an explicit draft), sparse visuals, bad timecodes, missing agent markdown, optional `--require-audio` for TTS on disk.
+- **WARN (heuristic “eval”):** average scene length too high for punchy cuts, SFX cue density too high when `sfx_enabled` is true, no `episode.music.track_path`, b-roll scenes without a clip even when fallbacks are allowed.
+
+Treat **WARN** like a review checklist: fix or consciously accept before calling the episode done.
+
+**Tier 1 — optional (signal analysis)**  
+After render: `ffprobe` duration/codecs; `ffmpeg astats` / `volumedetect` on the final mix to catch clipping or a second bed fighting the VO. Wire this as a small script later if needed.
+
+**Tier 2 — optional (LLM-as-judge)**  
+Export a **contact sheet** (`ffmpeg` every N seconds) plus `script.md` → one multimodal prompt with a fixed **rubric** (pacing, variety, legibility, audio description). Useful for “Fireship-ish?” scoring; costs money and is non-deterministic.
+
+**Renderer:** set `render_config.sfx_enabled` to `false` to ship **VO (+ music only)** and ignore all `sfx` arrays in the storyboard for that episode.
 
 ## Directory Layout
 
@@ -112,6 +157,7 @@ lgtm/
 | TTS | Kokoro-82M (local, existing venv) |
 | Stock video | Pexels API + Pixabay API + Pollinations.ai (Generative) |
 | Agent system | Claude Code `.claude/agents/` |
+| Codex runner | `.codex/agents/` plus `scripts/codex-video.ps1` wrapping `codex exec` |
 | Episode config | JSON (episode.schema.json) |
 | Storyboard | JSON (storyboard.schema.json) |
 | Distribution copy | Markdown per platform |

@@ -21,6 +21,10 @@ Short-form video pipeline aimed at enterprise IT culture: **Mike Judge × Gary L
 | `render/generate_assets.py` | Fetches custom generative b-roll imagery from Pollinations.ai for hyper-specific scenes |
 | `render/distribute.py` | Reads `distribution.md` and posts the video to Slack (defaults to dry-run unless `--execute` is passed) |
 | `.claude/agents/` | Claude Code agent definitions for the creative pipeline |
+| `.codex/agents/` | Codex CLI role prompts that mirror the creative pipeline |
+| `scripts/codex-video.ps1` | PowerShell wrapper for running LGTM agents with `codex exec` |
+| `render/pipeline.py` | **Episode builder** — Pollinations (optional) → Kokoro TTS → Giphy/Pixabay/Pexels clips → `production_check` → `renderer.py` |
+| `scripts/build-episode.ps1` | Thin wrapper around `render/pipeline.py` for Windows |
 | `REQUIREMENTS.md` | Brand + technical spec |
 | `CLAUDE.md` | Cursor / assistant project guide (paths, rules) |
 
@@ -87,11 +91,46 @@ Output defaults to **`episodes/<id>/output/episode.mp4`**.
 1. Copy an existing `episodes/ep00X/` layout or create `episodes/ep00N/` with `tts/`, `clips/`, `output/`.
 2. Fill **`episode.json`** (metadata, **`render_config`**, **`approved`** when ready, optional **`renderer`**, **`clip_sources`**).
 3. Write **`storyboard.json`** matching **`schemas/storyboard.schema.json`** (scene types: `card`, `kinetic`, `broll`, `mockup`, etc.).
-4. Produce **`tts/*.wav`** per voiced scene (Kokoro or other tool referenced in **`CLAUDE.md`**).
-5. For b-roll scenes, drop **`clips/<scene_id>.mp4`** and set `visual.clip_file` / metadata as needed.
-6. Run the appropriate **renderer**.
+4. **Materialize assets + render** (recommended — pulls/creates what the storyboard references):
+
+   ```bash
+   python render/pipeline.py --episode episodes/ep00N/episode.json
+   ```
+
+   Or before approval, only WAVs + clips:
+
+   ```bash
+   python render/pipeline.py --episode episodes/ep00N/episode.json --no-render
+   ```
+
+   Manual path: produce **`tts/*.wav`** (Kokoro), place **`clips/<scene_id>.mp4`**, run **`production_check.py`**, then the **renderer**.
 
 Creative steps (strategy, script, claiming, clip sourcing) are usually driven via **agents in `.claude/agents/`** — see **`REQUIREMENTS.md`** for roster and rules.
+
+### Codex CLI workflow
+
+Codex can run the same pipeline through `.codex/agents/`:
+
+```powershell
+.\scripts\codex-video.ps1 -Agent creative-director -Episode ep007 -Brief "One-line episode brief"
+```
+
+Run a single step:
+
+```powershell
+.\scripts\codex-video.ps1 -Agent storyboard -Episode ep007
+.\scripts\codex-video.ps1 -Agent renderer -Episode ep007
+```
+
+Useful flags: `-Search` enables Codex web search, `-Model <model>` selects a model, and `-FullAuto` passes Codex CLI `--full-auto`. Full workflow notes live in `.codex/workflows/create-video.md`.
+
+Before final render, run the production gate:
+
+```powershell
+python render/production_check.py --episode episodes/ep007/episode.json --require-audio
+```
+
+This fails all-card/fallback-card packages before they become technically valid but creatively weak MP4s.
 
 ---
 

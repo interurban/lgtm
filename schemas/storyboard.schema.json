@@ -33,7 +33,7 @@
 
     "scene": {
       "type": "object",
-      "required": ["scene_id", "type", "start", "duration"],
+      "required": ["scene_id", "type", "start", "duration", "visual"],
       "additionalProperties": false,
       "properties": {
         "scene_id": {
@@ -44,7 +44,7 @@
         },
         "type": {
           "type": "string",
-          "enum": ["card", "broll", "screen-recording", "talking-head"],
+          "enum": ["card", "broll", "screen-recording", "talking-head", "kinetic", "mockup", "burst"],
           "description": "Scene type. Determines which visual properties are required."
         },
         "start": {
@@ -57,6 +57,15 @@
           "exclusiveMinimum": 0,
           "description": "Scene duration in seconds."
         },
+        "enter": {
+          "type": "string",
+          "enum": ["fade", "scale", "snap", "none"],
+          "description": "Entry animation used by renderers."
+        },
+        "style": {
+          "type": "string",
+          "description": "Optional renderer style wrapper, e.g. amiga in Remotion."
+        },
         "vo": { "$ref": "#/$defs/vo_block" },
         "visual": {
           "description": "Type-specific visual properties. See $defs for each type.",
@@ -64,8 +73,16 @@
             { "$ref": "#/$defs/visual_card" },
             { "$ref": "#/$defs/visual_broll" },
             { "$ref": "#/$defs/visual_screen_recording" },
-            { "$ref": "#/$defs/visual_talking_head" }
+            { "$ref": "#/$defs/visual_talking_head" },
+            { "$ref": "#/$defs/visual_kinetic" },
+            { "$ref": "#/$defs/visual_mockup" },
+            { "$ref": "#/$defs/visual_burst" }
           ]
+        },
+        "captions": {
+          "type": "array",
+          "description": "Optional Remotion caption overlays.",
+          "items": { "$ref": "#/$defs/caption" }
         },
         "sfx": {
           "type": "array",
@@ -156,7 +173,7 @@
       "type": "object",
       "description": "Dark card with LGTM label + headline + subtitle. Brand default scene type.",
       "required": ["scene_type", "headline"],
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "scene_type": { "type": "string", "const": "card" },
         "headline": {
@@ -189,7 +206,7 @@
         },
         "clip_source": {
           "type": "string",
-          "enum": ["pexels", "pixabay", "local", "generated"],
+          "enum": ["pexels", "pixabay", "giphy", "local", "generated"],
           "description": "Where the clip was sourced."
         },
         "clip_id": {
@@ -243,24 +260,126 @@
       }
     },
 
+    "visual_kinetic": {
+      "type": "object",
+      "description": "Animated number or short phrase reveal.",
+      "required": ["scene_type", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_type": { "type": "string", "const": "kinetic" },
+        "value": {
+          "type": "string",
+          "description": "Large animated value or word."
+        },
+        "label": {
+          "type": "string",
+          "description": "Smaller label below the value."
+        },
+        "color": {
+          "type": "string",
+          "enum": ["accent", "white", "red"],
+          "default": "accent"
+        },
+        "label_color": {
+          "type": "string",
+          "enum": ["accent", "white", "red"],
+          "default": "white"
+        }
+      }
+    },
+
+    "visual_mockup": {
+      "type": "object",
+      "description": "Rendered fake corporate artifact: Slack, JIRA, calendar, or code.",
+      "required": ["scene_type", "mockup_type", "mockup_data"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_type": { "type": "string", "const": "mockup" },
+        "mockup_type": {
+          "type": "string",
+          "enum": ["slack", "jira", "calendar", "code"]
+        },
+        "mockup_data": {
+          "type": "object",
+          "description": "Mockup-specific data consumed by render/mockups.py.",
+          "additionalProperties": true
+        },
+        "fallback": {
+          "$ref": "#/$defs/visual_card"
+        }
+      }
+    },
+
+    "visual_burst": {
+      "type": "object",
+      "description": "Remotion-only burst typography scene.",
+      "required": ["scene_type", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "scene_type": { "type": "string", "const": "burst" },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["text"],
+            "additionalProperties": true,
+            "properties": {
+              "text": { "type": "string" },
+              "delay": { "type": "number", "minimum": 0 },
+              "color": { "type": "string" },
+              "size": { "type": "string" },
+              "from": { "type": "string" },
+              "rotate": { "type": "number" },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": { "type": "number" },
+                  "y": { "type": "number" }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "caption": {
+      "type": "object",
+      "required": ["text", "at", "duration"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string" },
+        "at": { "type": "number", "minimum": 0 },
+        "duration": { "type": "number", "exclusiveMinimum": 0 },
+        "position": { "type": "string" },
+        "color": { "type": "string" },
+        "size": { "type": "string" }
+      }
+    },
+
     "sfx_cue": {
       "type": "object",
       "description": "A sound effect tied to a moment within the scene.",
-      "required": ["offset", "description"],
+      "required": ["at", "name"],
       "additionalProperties": false,
       "properties": {
-        "offset": {
+        "at": {
           "type": "number",
           "minimum": 0,
           "description": "Seconds from the start of this scene to trigger the SFX."
         },
-        "description": {
+        "name": {
           "type": "string",
-          "description": "What the SFX is, for the audio-direction agent and human review."
+          "enum": ["whoosh", "thud", "click", "ding", "stinger", "pop", "typewriter"],
+          "description": "Name of an SFX asset in assets/sfx."
         },
-        "file": {
-          "type": "string",
-          "description": "Relative path to SFX audio file, if sourced."
+        "vol": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1.5,
+          "description": "Optional volume multiplier for this cue."
         }
       }
     }

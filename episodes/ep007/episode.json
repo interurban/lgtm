@@ -1,0 +1,31 @@
+{
+  "episode_id": "ep007",
+  "title": "DHH's Take on Codex",
+  "brief": "DHH's take on Codex: the former AI-coding skeptic now treats agents as the first draft, while humans keep responsibility for taste, review, and the merge button.",
+  "status": "rendered",
+  "approved": true,
+  "approved_by": "James",
+  "approved_at": "2026-04-29T00:00:00Z",
+  "created_at": "2026-04-29T00:00:00Z",
+  "render_config": {
+    "resolution": [1920, 1080],
+    "fps": 30,
+    "background_color": [10, 10, 16],
+    "accent_color": [232, 160, 32],
+    "font_headline": "Consolas",
+    "music_volume": 0.1,
+    "broll_dim": 0.58,
+    "ken_burns_scale": 1.07
+  },
+  "clip_sources": ["giphy"],
+  "storyboard_path": "storyboard.json",
+  "paths": {
+    "script": "script.md",
+    "visual_brief": "visual-brief.md",
+    "audio_direction": "audio-direction.md",
+    "tts_dir": "tts",
+    "clips_dir": "clips",
+    "output_dir": "output",
+    "output_mp4": "output/episode.mp4"
+  }
+}
